@@ -66,10 +66,10 @@ namespace wonder_rabbit_project
         auto initialize_window_hints(initialize_params_t& ps) -> void
         {
           initialize_params_t dps;
-          default_initialize_params_create_window(dps);
+          default_initialize_params_window_hints(dps);
           
           const auto get = [&ps, &dps](const char* name)
-          { return ps.get("resizable", dps.get<int>("resizable")); };
+          { return ps.get(name, dps.get<int>(name)); };
           
           glfwWindowHint( GLFW_RESIZABLE , get("resizable") );
           glfwWindowHint( GLFW_VISIBLE   , get("visible" ) );
@@ -208,8 +208,8 @@ namespace wonder_rabbit_project
           -> initialize_params_t override
         {
           initialize_params_t ps;
-          default_initialize_params_create_window(ps);
           default_initialize_params_window_hints(ps);
+          default_initialize_params_create_window(ps);
           return ps;
         }
         
