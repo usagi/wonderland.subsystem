@@ -6,8 +6,10 @@
   #include <emscripten/emscripten.h>
 #endif
 
-// define this CPP-macro if need GLFW3 before include subsystem.hxx
-#define WRP_WONDERLAND_SUBSYSTEM_GLFW3
+// define or take a compiler option: c++ ... -DWRP_WONDERLAND_SUBSYSTEM_GLFW3 main.cxx
+//#define WRP_WONDERLAND_SUBSYSTEM_GLFW3
+//#define WRP_WONDERLAND_SUBSYSTEM_GLFW2
+
 // include subsystem
 #include "subsystem.hxx"
 
@@ -15,6 +17,7 @@ int main()
 {
   // using
   using wonder_rabbit_project::wonderland::subsystem::subsystem_t;
+  using wonder_rabbit_project::wonderland::subsystem::key;
   
   // generate the subsystem
   auto subsystem = std::make_shared<subsystem_t>();
@@ -46,7 +49,10 @@ int main()
   subsystem -> update_functors.emplace_front( [&subsystem]
   {
     /* do update your world */
-    if ( subsystem -> keyboard_state< GLFW_KEY_ESCAPE >() )
+    for ( auto key = 0; key < 255; ++key )
+      if ( subsystem -> keyboard_state( key ) )
+        std::cerr << key << " ";
+    if ( subsystem -> keyboard_state< key::keyboard_escape >() )
       subsystem -> to_continue( false );
   } );
   

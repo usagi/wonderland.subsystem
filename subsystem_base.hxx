@@ -6,6 +6,7 @@
 #include <memory>
 #include <unordered_map>
 #include <forward_list>
+#include <vector>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/optional.hpp>
@@ -62,9 +63,6 @@ namespace wonder_rabbit_project
         using keyboard_states_t
           = std::vector<bool>;
           
-        // by USB HID Usage code of the "MENU" key is 348.
-        static constexpr unsigned max_keycode = 348;
-      
       protected:
         
         keyboard_states_t _keyboard_states;
@@ -77,7 +75,7 @@ namespace wonder_rabbit_project
         
         subsystem_base_t()
         {
-          _keyboard_states.resize( max_keycode );
+          _keyboard_states.resize( std::numeric_limits<key_code_t>::max() );
         }
         
         virtual ~subsystem_base_t() { }
@@ -115,10 +113,14 @@ namespace wonder_rabbit_project
           -> void
         { _to_continue = b; }
         
-        template<unsigned keycode>
+        template<key_code_t T_keycode>
         inline auto keyboard_state() const 
           -> bool
-        { return _keyboard_states[keycode]; }
+        {
+          static_assert(T_keycode >= std::numeric_limits<key_code_t>::min(), "T_keycode must: T_keycode >= std::numeric_limits<key_code_t>::min()");
+          static_assert(T_keycode <= std::numeric_limits<key_code_t>::max(), "T_keycode must: T_keycode <= std::numeric_limits<key_code_t>::max()");
+          return _keyboard_states[key_code_t(T_keycode)];
+        }
         
         virtual auto keyboard_state(unsigned keycode) const
           -> bool

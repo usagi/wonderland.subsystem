@@ -9,185 +9,191 @@ namespace wonder_rabbit_project
     namespace subsystem
     {
       
+      using key_code_t = std::uint8_t;
+      
       // USB HID Usage page-7 { name, id }
-      enum class key_e
-        : std::uint8_t
-      { reserved
-      , keyboard_error_roll_over
-      , keyboard_post_fail
-      , keyboard_error_undefined
-      , keyboard_a_and_A
-      , keyboard_b_and_B
-      , keyboard_c_and_C
-      , keyboard_d_and_D
-      , keyboard_e_and_E
-      , keyboard_f_and_F
-      , keyboard_g_and_G
-      , keyboard_h_and_H
-      , keyboard_i_and_I
-      , keyboard_j_and_J
-      , keyboard_k_and_K
-      , keyboard_l_and_L
-      , keyboard_m_and_M
-      , keyboard_n_and_N
-      , keyboard_o_and_O
-      , keyboard_p_and_P
-      , keyboard_q_and_Q
-      , keyboard_r_and_R
-      , keyboard_s_and_S
-      , keyboard_t_and_T
-      , keyboard_u_and_U
-      , keyboard_v_and_V
-      , keyboard_w_and_W
-      , keyboard_x_and_X
-      , keyboard_y_and_Y
-      , keyboard_z_and_Z
-      , keyboard_1_and_exclamation // !
-      , keyboard_2_and_atmark // @
-      , keyboard_3_and_number // #
-      , keyboard_4_and_doller // $
-      , keyboard_5_and_percent // %
-      , keyboard_6_and_caret // ^
-      , keyboard_7_and_ampersand // &
-      , keyboard_8_and_asterisk // *
-      , keyboard_9_and_round_bracket_begin // (
-      , keyboard_0_and_round_bracket_end // )
-      , keyboard_return_enter
-      , keyboard_escape
-      , keyboard_delete_backspace
-      , keyboard_tab
-      , keyboard_spacebar
-      , keyboard_minus_and_underscore // - _
-      , keyboard_equal_and_plus // = +
-      , keyboard_box_bracket_open_and_curly_bracket_open // [ {
-      , keyboard_box_bracket_close_and_curly_bracket_close // ] }
-      , keyboard_back_slash_and_vertical_bar // |
-      , keyboard_non_us_number_mark_and_tilde // ~
-      , keyboard_semicolon_and_colon // ; :
-      , keyboard_single_quotation_and_double_quotation // ' "
-      , keyboard_grave_accent_and_tilde
-      , keyboard_comma_and_angle_bracket_open // , <
-      , keyboard_dot_and_angle_bracket_close // . >
-      , keyboard_slash_and_question // / ?
-      , keyboard_caps_lock
-      , keyboard_f1
-      , keyboard_f2
-      , keyboard_f3
-      , keyboard_f4
-      , keyboard_f5
-      , keyboard_f6
-      , keyboard_f7
-      , keyboard_f8
-      , keyboard_f9
-      , keyboard_f10
-      , keyboard_f11
-      , keyboard_f12
-      , keyboard_print_screen
-      , keyboard_scroll_lock
-      , keyboard_pause
-      , keyboard_insert
-      , keyboard_home
-      , keyboard_page_up
-      , keyboard_delete_forward
-      , keyboard_end
-      , keyboard_page_down
-      , keyboard_right_arrow
-      , keyboard_left_arrow
-      , keyboard_down_arrow
-      , keyboard_up_arrow
-      , keypad_num_lock_and_clear
-      , keypad_slash
-      , keypad_asterisk
-      , keypad_minus
-      , keypad_plus
-      , keypad_enter
-      , keypad_1_and_end
-      , keypad_2_and_down_arrow
-      , keypad_3_and_page_dn
-      , keypad_4_and_left_arrow
-      , keypad_5
-      , keypad_6_and_right_arrow
-      , keypad_7_and_home
-      , keypad_8_and_up_arrow
-      , keypad_9_and_page_up
-      , keypad_0_and_insert
-      , keypad_dot_and_delete
-      , keyboard_non_us_backslash_and_vertical_bar
-      , keyboard_application
-      , keyboard_power
-      , keypad_equal
-      , keyboard_f13
-      , keyboard_f14
-      , keyboard_f15
-      , keyboard_f16
-      , keyboard_f17
-      , keyboard_f18
-      , keyboard_f19
-      , keyboard_f20
-      , keyboard_f21
-      , keyboard_f22
-      , keyboard_f23
-      , keyboard_f24
-      , keyboard_execute
-      , keyboard_help
-      , keyboard_menu
-      , keyboard_select
-      , keyboard_stop
-      , keyboard_again
-      , keyboard_undo
-      , keyboard_cut
-      , keyboard_copy
-      , keyboard_paste
-      , keyboard_find
-      , keyboard_mute
-      , keyboard_volume_up
-      , keyboard_vokume_down
-      , keyboard_locking_caps_lock
-      , keyboard_locking_num_lock
-      , keyboard_locking_scroll_lock
-      , keypad_comma
-      , keypad_equal_sign
-      , keyboard_internatinal1
-      , keyboard_internatinal2
-      , keyboard_internatinal3
-      , keyboard_internatinal4
-      , keyboard_internatinal5
-      , keyboard_internatinal6
-      , keyboard_internatinal7
-      , keyboard_internatinal8
-      , keyboard_internatinal9
-      , keyboard_lang1
-      , keyboard_lang2
-      , keyboard_lang3
-      , keyboard_lang4
-      , keyboard_lang5
-      , keyboard_lang6
-      , keyboard_lang7
-      , keyboard_lang8
-      , keyboard_lang9
-      , keyboard_alternate_erase
-      , keyboard_sysreq_attention
-      , keyboard_cancel
-      , keyboard_clear
-      , keyboard_prior
-      , keyboard_return
-      , keyboard_separator
-      , keyboard_out
-      , keyboard_oper
-      , keyboard_clear_again
-      , keyboard_cr_sel_props
-      , keyboard_ex_sel
-      , keyboard_left_control
-      , keyboard_left_shift
-      , keyboard_left_alt
-      , keyboard_left_gui
-      , keyboard_right_control
-      , keyboard_right_shift
-      , keyboard_right_alt
-      , keyboard_right_gui
+      //enum class key_e
+      //  : key_code_t
+      struct key_t
+      {
+        enum
+        { reserved
+        , keyboard_error_roll_over
+        , keyboard_post_fail
+        , keyboard_error_undefined
+        , keyboard_a_and_A
+        , keyboard_b_and_B
+        , keyboard_c_and_C
+        , keyboard_d_and_D
+        , keyboard_e_and_E
+        , keyboard_f_and_F
+        , keyboard_g_and_G
+        , keyboard_h_and_H
+        , keyboard_i_and_I
+        , keyboard_j_and_J
+        , keyboard_k_and_K
+        , keyboard_l_and_L
+        , keyboard_m_and_M
+        , keyboard_n_and_N
+        , keyboard_o_and_O
+        , keyboard_p_and_P
+        , keyboard_q_and_Q
+        , keyboard_r_and_R
+        , keyboard_s_and_S
+        , keyboard_t_and_T
+        , keyboard_u_and_U
+        , keyboard_v_and_V
+        , keyboard_w_and_W
+        , keyboard_x_and_X
+        , keyboard_y_and_Y
+        , keyboard_z_and_Z
+        , keyboard_1_and_exclamation // !
+        , keyboard_2_and_atmark // @
+        , keyboard_3_and_number // #
+        , keyboard_4_and_doller // $
+        , keyboard_5_and_percent // %
+        , keyboard_6_and_caret // ^
+        , keyboard_7_and_ampersand // &
+        , keyboard_8_and_asterisk // *
+        , keyboard_9_and_round_bracket_begin // (
+        , keyboard_0_and_round_bracket_end // )
+        , keyboard_return_enter
+        , keyboard_escape
+        , keyboard_delete_backspace
+        , keyboard_tab
+        , keyboard_spacebar
+        , keyboard_minus_and_underscore // - _
+        , keyboard_equal_and_plus // = +
+        , keyboard_box_bracket_open_and_curly_bracket_open // [ {
+        , keyboard_box_bracket_close_and_curly_bracket_close // ] }
+        , keyboard_back_slash_and_vertical_bar // |
+        , keyboard_non_us_number_mark_and_tilde // ~
+        , keyboard_semicolon_and_colon // ; :
+        , keyboard_single_quotation_and_double_quotation // ' "
+        , keyboard_grave_accent_and_tilde
+        , keyboard_comma_and_angle_bracket_open // , <
+        , keyboard_dot_and_angle_bracket_close // . >
+        , keyboard_slash_and_question // / ?
+        , keyboard_caps_lock
+        , keyboard_f1
+        , keyboard_f2
+        , keyboard_f3
+        , keyboard_f4
+        , keyboard_f5
+        , keyboard_f6
+        , keyboard_f7
+        , keyboard_f8
+        , keyboard_f9
+        , keyboard_f10
+        , keyboard_f11
+        , keyboard_f12
+        , keyboard_print_screen
+        , keyboard_scroll_lock
+        , keyboard_pause
+        , keyboard_insert
+        , keyboard_home
+        , keyboard_page_up
+        , keyboard_delete_forward
+        , keyboard_end
+        , keyboard_page_down
+        , keyboard_right_arrow
+        , keyboard_left_arrow
+        , keyboard_down_arrow
+        , keyboard_up_arrow
+        , keypad_num_lock_and_clear
+        , keypad_slash
+        , keypad_asterisk
+        , keypad_minus
+        , keypad_plus
+        , keypad_enter
+        , keypad_1_and_end
+        , keypad_2_and_down_arrow
+        , keypad_3_and_page_dn
+        , keypad_4_and_left_arrow
+        , keypad_5
+        , keypad_6_and_right_arrow
+        , keypad_7_and_home
+        , keypad_8_and_up_arrow
+        , keypad_9_and_page_up
+        , keypad_0_and_insert
+        , keypad_dot_and_delete
+        , keyboard_non_us_backslash_and_vertical_bar
+        , keyboard_application
+        , keyboard_power
+        , keypad_equal
+        , keyboard_f13
+        , keyboard_f14
+        , keyboard_f15
+        , keyboard_f16
+        , keyboard_f17
+        , keyboard_f18
+        , keyboard_f19
+        , keyboard_f20
+        , keyboard_f21
+        , keyboard_f22
+        , keyboard_f23
+        , keyboard_f24
+        , keyboard_execute
+        , keyboard_help
+        , keyboard_menu
+        , keyboard_select
+        , keyboard_stop
+        , keyboard_again
+        , keyboard_undo
+        , keyboard_cut
+        , keyboard_copy
+        , keyboard_paste
+        , keyboard_find
+        , keyboard_mute
+        , keyboard_volume_up
+        , keyboard_vokume_down
+        , keyboard_locking_caps_lock
+        , keyboard_locking_num_lock
+        , keyboard_locking_scroll_lock
+        , keypad_comma
+        , keypad_equal_sign
+        , keyboard_internatinal1
+        , keyboard_internatinal2
+        , keyboard_internatinal3
+        , keyboard_internatinal4
+        , keyboard_internatinal5
+        , keyboard_internatinal6
+        , keyboard_internatinal7
+        , keyboard_internatinal8
+        , keyboard_internatinal9
+        , keyboard_lang1
+        , keyboard_lang2
+        , keyboard_lang3
+        , keyboard_lang4
+        , keyboard_lang5
+        , keyboard_lang6
+        , keyboard_lang7
+        , keyboard_lang8
+        , keyboard_lang9
+        , keyboard_alternate_erase
+        , keyboard_sysreq_attention
+        , keyboard_cancel
+        , keyboard_clear
+        , keyboard_prior
+        , keyboard_return
+        , keyboard_separator
+        , keyboard_out
+        , keyboard_oper
+        , keyboard_clear_again
+        , keyboard_cr_sel_props
+        , keyboard_ex_sel
+        , keyboard_left_control
+        , keyboard_left_shift
+        , keyboard_left_alt
+        , keyboard_left_gui
+        , keyboard_right_control
+        , keyboard_right_shift
+        , keyboard_right_alt
+        , keyboard_right_gui
+        };
       };
       
-      template<std::uint8_t keycode = 0x00> struct key_name_t { static constexpr const char* value = ""; };
+      template<key_code_t T_keycode = 0x00> struct key_name_t { };
       template<> struct key_name_t<0x00> { static constexpr const char* value = "reserved"; };
       template<> struct key_name_t<0x01> { static constexpr const char* value = "keyboard_error_roll_over"; };
       template<> struct key_name_t<0x02> { static constexpr const char* value = "keyboard_post_fail"; };
@@ -361,6 +367,10 @@ namespace wonder_rabbit_project
       template<> struct key_name_t<0xE5> { static constexpr const char* value = "keyboard_right_shift"; };
       template<> struct key_name_t<0xE6> { static constexpr const char* value = "keyboard_right_alt"; };
       template<> struct key_name_t<0xE7> { static constexpr const char* value = "keyboard_right_gui"; };
+      
+      // easy for use
+      using key = key_t;
+      template<key_code_t T_keycode> using key_name = key_name_t<T_keycode>;
     }
   }
 }
