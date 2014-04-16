@@ -122,11 +122,11 @@ namespace wonder_rabbit_project
           return _keyboard_states[key_code_t(T_keycode)];
         }
         
-        virtual auto keyboard_state(unsigned keycode) const
+        virtual auto keyboard_state(key_code_t keycode) const
           -> bool
         { return _keyboard_states[keycode]; }
         
-        virtual auto keyboard_state(unsigned keycode, bool action)
+        virtual auto keyboard_state(key_code_t keycode, bool action)
           -> void
         { _keyboard_states[keycode] = action; }
         
