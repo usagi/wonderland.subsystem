@@ -52,7 +52,7 @@ int main()
     for ( auto key = 0; key < 255; ++key )
       if ( subsystem -> keyboard_state( key ) )
         std::cerr << key << " ";
-    if ( subsystem -> keyboard_state< key::keyboard_escape >() )
+    if ( subsystem -> keyboard_state< key::escape >() )
       subsystem -> to_continue( false );
   } );
   

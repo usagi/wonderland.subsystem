@@ -18,89 +18,90 @@ namespace wonder_rabbit_project
       {
         enum
         { reserved
+        // US keytop definition
         , keyboard_error_roll_over
         , keyboard_post_fail
         , keyboard_error_undefined
-        , keyboard_a_and_A
-        , keyboard_b_and_B
-        , keyboard_c_and_C
-        , keyboard_d_and_D
-        , keyboard_e_and_E
-        , keyboard_f_and_F
-        , keyboard_g_and_G
-        , keyboard_h_and_H
-        , keyboard_i_and_I
-        , keyboard_j_and_J
-        , keyboard_k_and_K
-        , keyboard_l_and_L
-        , keyboard_m_and_M
-        , keyboard_n_and_N
-        , keyboard_o_and_O
-        , keyboard_p_and_P
-        , keyboard_q_and_Q
-        , keyboard_r_and_R
-        , keyboard_s_and_S
-        , keyboard_t_and_T
-        , keyboard_u_and_U
-        , keyboard_v_and_V
-        , keyboard_w_and_W
-        , keyboard_x_and_X
-        , keyboard_y_and_Y
-        , keyboard_z_and_Z
-        , keyboard_1_and_exclamation // !
-        , keyboard_2_and_atmark // @
-        , keyboard_3_and_number // #
-        , keyboard_4_and_doller // $
-        , keyboard_5_and_percent // %
-        , keyboard_6_and_caret // ^
-        , keyboard_7_and_ampersand // &
-        , keyboard_8_and_asterisk // *
-        , keyboard_9_and_round_bracket_begin // (
-        , keyboard_0_and_round_bracket_end // )
-        , keyboard_return_enter
-        , keyboard_escape
-        , keyboard_delete_backspace
-        , keyboard_tab
-        , keyboard_spacebar
-        , keyboard_minus_and_underscore // - _
-        , keyboard_equal_and_plus // = +
-        , keyboard_box_bracket_open_and_curly_bracket_open // [ {
-        , keyboard_box_bracket_close_and_curly_bracket_close // ] }
-        , keyboard_back_slash_and_vertical_bar // |
-        , keyboard_non_us_number_mark_and_tilde // ~
-        , keyboard_semicolon_and_colon // ; :
-        , keyboard_single_quotation_and_double_quotation // ' "
-        , keyboard_grave_accent_and_tilde
-        , keyboard_comma_and_angle_bracket_open // , <
-        , keyboard_dot_and_angle_bracket_close // . >
-        , keyboard_slash_and_question // / ?
-        , keyboard_caps_lock
-        , keyboard_f1
-        , keyboard_f2
-        , keyboard_f3
-        , keyboard_f4
-        , keyboard_f5
-        , keyboard_f6
-        , keyboard_f7
-        , keyboard_f8
-        , keyboard_f9
-        , keyboard_f10
-        , keyboard_f11
-        , keyboard_f12
-        , keyboard_print_screen
-        , keyboard_scroll_lock
-        , keyboard_pause
-        , keyboard_insert
-        , keyboard_home
-        , keyboard_page_up
-        , keyboard_delete_forward
-        , keyboard_end
-        , keyboard_page_down
-        , keyboard_right_arrow
-        , keyboard_left_arrow
-        , keyboard_down_arrow
-        , keyboard_up_arrow
-        , keypad_num_lock_and_clear
+        , keyboard_a_and_A, a = keyboard_a_and_A, A = keyboard_a_and_A
+        , keyboard_b_and_B, b = keyboard_b_and_B, B = keyboard_b_and_B
+        , keyboard_c_and_C, c = keyboard_c_and_C, C = keyboard_c_and_C
+        , keyboard_d_and_D, d = keyboard_d_and_D, D = keyboard_d_and_D
+        , keyboard_e_and_E, e = keyboard_e_and_E, E = keyboard_e_and_E
+        , keyboard_f_and_F, f = keyboard_f_and_F, F = keyboard_f_and_F
+        , keyboard_g_and_G, g = keyboard_g_and_G, G = keyboard_g_and_G
+        , keyboard_h_and_H, h = keyboard_h_and_H, H = keyboard_h_and_H
+        , keyboard_i_and_I, i = keyboard_i_and_I, I = keyboard_i_and_I
+        , keyboard_j_and_J, j = keyboard_j_and_J, J = keyboard_j_and_J
+        , keyboard_k_and_K, k = keyboard_k_and_K, K = keyboard_k_and_K
+        , keyboard_l_and_L, l = keyboard_l_and_L, L = keyboard_l_and_L
+        , keyboard_m_and_M, m = keyboard_m_and_M, M = keyboard_m_and_M
+        , keyboard_n_and_N, n = keyboard_n_and_N, N = keyboard_n_and_N
+        , keyboard_o_and_O, o = keyboard_o_and_O, O = keyboard_o_and_O
+        , keyboard_p_and_P, p = keyboard_p_and_P, P = keyboard_p_and_P
+        , keyboard_q_and_Q, q = keyboard_q_and_Q, Q = keyboard_q_and_Q
+        , keyboard_r_and_R, r = keyboard_r_and_R, R = keyboard_r_and_R
+        , keyboard_s_and_S, s = keyboard_s_and_S, S = keyboard_s_and_S
+        , keyboard_t_and_T, t = keyboard_t_and_T, T = keyboard_t_and_T
+        , keyboard_u_and_U, u = keyboard_u_and_U, U = keyboard_u_and_U
+        , keyboard_v_and_V, v = keyboard_v_and_V, V = keyboard_v_and_V
+        , keyboard_w_and_W, w = keyboard_w_and_W, W = keyboard_w_and_W
+        , keyboard_x_and_X, x = keyboard_x_and_X, X = keyboard_x_and_X
+        , keyboard_y_and_Y, y = keyboard_y_and_Y, Y = keyboard_y_and_Y
+        , keyboard_z_and_Z, z = keyboard_z_and_Z, Z = keyboard_z_and_Z
+        , keyboard_1_and_exclamation, _1 = keyboard_1_and_exclamation, exclamation = keyboard_1_and_exclamation // !
+        , keyboard_2_and_atmark     , _2 = keyboard_2_and_atmark, atmark = keyboard_2_and_atmark // @
+        , keyboard_3_and_number     , _3 = keyboard_3_and_number, number = keyboard_3_and_number // #
+        , keyboard_4_and_doller     , _4 = keyboard_4_and_doller, doller = keyboard_4_and_doller // $
+        , keyboard_5_and_percent    , _5 = keyboard_5_and_percent, percent = keyboard_5_and_percent // %
+        , keyboard_6_and_caret      , _6 = keyboard_6_and_caret, caret = keyboard_6_and_caret // ^
+        , keyboard_7_and_ampersand  , _7 = keyboard_7_and_ampersand, ampersand = keyboard_7_and_ampersand // &
+        , keyboard_8_and_asterisk   , _8 = keyboard_8_and_asterisk, asterisk = keyboard_8_and_asterisk // *
+        , keyboard_9_and_round_bracket_begin, _9 = keyboard_9_and_round_bracket_begin, round_bracket_begin = keyboard_9_and_round_bracket_begin // (
+        , keyboard_0_and_round_bracket_end  , _0 = keyboard_0_and_round_bracket_end, round_bracket_end = keyboard_0_and_round_bracket_end // )
+        , keyboard_return_enter     , enter = keyboard_return_enter
+        , keyboard_escape           , escape = keyboard_escape
+        , keyboard_delete_backspace , backspace = keyboard_delete_backspace
+        , keyboard_tab              , tab = keyboard_tab
+        , keyboard_spacebar         , space = keyboard_spacebar, spacebar = keyboard_spacebar
+        , keyboard_minus_and_underscore, minus = keyboard_minus_and_underscore, underscore = keyboard_minus_and_underscore // - _
+        , keyboard_equal_and_plus      , equal = keyboard_equal_and_plus, plus = keyboard_equal_and_plus // = +
+        , keyboard_box_bracket_open_and_curly_bracket_open  , box_bracket_open = keyboard_box_bracket_open_and_curly_bracket_open, curly_bracket_open = keyboard_box_bracket_open_and_curly_bracket_open // [ {
+        , keyboard_box_bracket_close_and_curly_bracket_close, box_bracket_close = keyboard_box_bracket_close_and_curly_bracket_close, curly_bracket_close = keyboard_box_bracket_close_and_curly_bracket_close // ] }
+        , keyboard_back_slash_and_vertical_bar  , back_slash = keyboard_back_slash_and_vertical_bar, vertical_bar = keyboard_back_slash_and_vertical_bar // |
+        , keyboard_non_us_number_mark_and_tilde , non_us_number_mark = keyboard_non_us_number_mark_and_tilde // ~
+        , keyboard_semicolon_and_colon          , semicolon = keyboard_semicolon_and_colon, colon = keyboard_semicolon_and_colon // ; :
+        , keyboard_single_quotation_and_double_quotation, single_quotation = keyboard_single_quotation_and_double_quotation, double_quotation = keyboard_single_quotation_and_double_quotation // ' "
+        , keyboard_grave_accent_and_tilde      , grave_accent = keyboard_grave_accent_and_tilde, 
+        , keyboard_comma_and_angle_bracket_open, comma = keyboard_comma_and_angle_bracket_open, angle_bracket_open = keyboard_comma_and_angle_bracket_open // , <
+        , keyboard_dot_and_angle_bracket_close , dot = keyboard_dot_and_angle_bracket_close, angle_bracket_close = keyboard_dot_and_angle_bracket_close // . >
+        , keyboard_slash_and_question          , slash = keyboard_slash_and_question, question = keyboard_slash_and_question // / ?
+        , keyboard_caps_lock                   , caps_lock = keyboard_caps_lock
+        , keyboard_f1, f1
+        , keyboard_f2, f2
+        , keyboard_f3, f3
+        , keyboard_f4, f4
+        , keyboard_f5, f5
+        , keyboard_f6, f6
+        , keyboard_f7, f7
+        , keyboard_f8, f8
+        , keyboard_f9, f9
+        , keyboard_f10, f10
+        , keyboard_f11, f11
+        , keyboard_f12, f12
+        , keyboard_print_screen, print_screen = keyboard_print_screen
+        , keyboard_scroll_lock , scroll_lock = keyboard_scroll_lock
+        , keyboard_pause       , pause = keyboard_pause
+        , keyboard_insert      , insert = keyboard_insert
+        , keyboard_home        , home = keyboard_home
+        , keyboard_page_up     , page_up = keyboard_page_up
+        , keyboard_delete_forward, delete_forward = keyboard_delete_forward
+        , keyboard_end         , end = keyboard_end
+        , keyboard_page_down   , page_down = keyboard_page_down
+        , keyboard_right_arrow , right_arrow = keyboard_right_arrow
+        , keyboard_left_arrow  , left_arrow = keyboard_left_arrow
+        , keyboard_down_arrow  , down_arrow = keyboard_down_arrow
+        , keyboard_up_arrow    , up_arrow = keyboard_up_arrow
+        , keypad_num_lock_and_clear, num_lock = keypad_num_lock_and_clear
         , keypad_slash
         , keypad_asterisk
         , keypad_minus
@@ -117,22 +118,22 @@ namespace wonder_rabbit_project
         , keypad_9_and_page_up
         , keypad_0_and_insert
         , keypad_dot_and_delete
-        , keyboard_non_us_backslash_and_vertical_bar
-        , keyboard_application
-        , keyboard_power
+        , keyboard_non_us_backslash_and_vertical_bar, non_us_backslash = keyboard_non_us_backslash_and_vertical_bar
+        , keyboard_application, application = keyboard_application
+        , keyboard_power, power = keyboard_power
         , keypad_equal
-        , keyboard_f13
-        , keyboard_f14
-        , keyboard_f15
-        , keyboard_f16
-        , keyboard_f17
-        , keyboard_f18
-        , keyboard_f19
-        , keyboard_f20
-        , keyboard_f21
-        , keyboard_f22
-        , keyboard_f23
-        , keyboard_f24
+        , keyboard_f13, f13 = keyboard_f13
+        , keyboard_f14, f14 = keyboard_f14
+        , keyboard_f15, f15 = keyboard_f15
+        , keyboard_f16, f16 = keyboard_f16
+        , keyboard_f17, f17 = keyboard_f17
+        , keyboard_f18, f18 = keyboard_f18
+        , keyboard_f19, f19 = keyboard_f19
+        , keyboard_f20, f20 = keyboard_f20
+        , keyboard_f21, f21 = keyboard_f21
+        , keyboard_f22, f22 = keyboard_f22
+        , keyboard_f23, f23 = keyboard_f23
+        , keyboard_f24, f24 = keyboard_f24
         , keyboard_execute
         , keyboard_help
         , keyboard_menu
@@ -152,15 +153,15 @@ namespace wonder_rabbit_project
         , keyboard_locking_scroll_lock
         , keypad_comma
         , keypad_equal_sign
-        , keyboard_internatinal1
-        , keyboard_internatinal2
-        , keyboard_internatinal3
-        , keyboard_internatinal4
-        , keyboard_internatinal5
-        , keyboard_internatinal6
-        , keyboard_internatinal7
-        , keyboard_internatinal8
-        , keyboard_internatinal9
+        , keyboard_international1
+        , keyboard_international2
+        , keyboard_international3
+        , keyboard_international4
+        , keyboard_international5
+        , keyboard_international6
+        , keyboard_international7
+        , keyboard_international8
+        , keyboard_international9
         , keyboard_lang1
         , keyboard_lang2
         , keyboard_lang3
@@ -182,14 +183,23 @@ namespace wonder_rabbit_project
         , keyboard_clear_again
         , keyboard_cr_sel_props
         , keyboard_ex_sel
-        , keyboard_left_control
-        , keyboard_left_shift
-        , keyboard_left_alt
-        , keyboard_left_gui
-        , keyboard_right_control
-        , keyboard_right_shift
-        , keyboard_right_alt
-        , keyboard_right_gui
+        , keyboard_left_control, left_control = keyboard_left_control
+        , keyboard_left_shift  , left_shift   = keyboard_left_shift
+        , keyboard_left_alt    , left_alt     = keyboard_left_alt
+        , keyboard_left_gui    , left_gui     = keyboard_left_gui
+        , keyboard_right_control, right_control = keyboard_right_control
+        , keyboard_right_shift  , right_shift   = keyboard_right_shift
+        , keyboard_right_alt    , right_alt     = keyboard_right_alt
+        , keyboard_right_gui    , right_gui     = keyboard_right_gui
+        // Japanese key-top support
+        japanese_katakana_hiragana = keyboard_internatinal2
+        japanese_caret             = keyboard_equal_and_plus
+        japanese_yen               = keyboard_internatinal3
+        japanese_atmark            = keyboard_box_bracket_open_and_curly_bracket_open
+        japanese_box_bracket_open  = keyboard_box_bracket_close_and_curly_bracket_close
+        japanese_colon             = keyboard_single_quotation_and_double_quotation
+        japanese_henkan            = keyboard_internatinal4
+        japanese_hankaku_zenkaku   = keyboard_grave_accent_and_tilde
         };
       };
       
