@@ -153,6 +153,21 @@ namespace wonder_rabbit_project
           );
         }
         
+        auto window_position(initialize_params_t ps) const -> void
+        {
+          initialize_params_t dps;
+          default_initialize_params_window_position(dps);
+          
+          // TODO: support SDL convertible flags
+          //   0x1FFF0000: UNDEFINED
+          //   0x2FFF0000: CENTERED
+          
+          glfwSetWindowPos
+          ( ps.get("x" , dps.get<int>("x") ) & 0x0000FFFF
+          , ps.get("y" , dps.get<int>("y") ) & 0x0000FFFF
+          );
+        }
+        
       public:
         
         ~GLFW3_t() override
@@ -206,10 +221,19 @@ namespace wonder_rabbit_project
           ps.put( "opengl_profile" , GLFW_OPENGL_ANY_PROFILE );
         }
         
+        auto default_initialize_params_window_position(initialize_params_t& ps)
+          -> void
+        {
+          // http://www.glfw.org/docs/latest/group__window.html#ga1abb6d690e8c88e0c8cd1751356dbca8
+          ps.put( "x" , 0 );
+          ps.put( "y" , 0 );
+        }
+        
         auto default_initialize_params() const
           -> initialize_params_t override
         {
           initialize_params_t ps;
+          default_initialize_params_window_position(ps);
           default_initialize_params_window_hints(ps);
           default_initialize_params_create_window(ps);
           return ps;
@@ -222,6 +246,7 @@ namespace wonder_rabbit_project
           initialize_set_error_callback();
           initialize_window_hints(ps);
           initialize_create_window(ps);
+          window_position(ps);
           initialize_make_contex_current();
           initialize_set_keyboard_callback();
           initialize_set_frame_buffer_size_callback();
