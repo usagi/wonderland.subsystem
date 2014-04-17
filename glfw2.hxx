@@ -140,6 +140,21 @@ namespace wonder_rabbit_project
           );
         }
         
+        auto window_position(initialize_params_t ps) const -> void
+        {
+          initialize_params_t dps;
+          default_initialize_params_window_position(dps);
+          
+          // TODO: support SDL convertible flags
+          //   0x1FFF0000: UNDEFINED
+          //   0x2FFF0000: CENTERED
+          
+          glfwSetWindowPos
+          ( ps.get("x" , dps.get<int>("x") ) & 0x0000FFFF
+          , ps.get("y" , dps.get<int>("y") ) & 0x0000FFFF
+          );
+        }
+        
       public:
         
         ~GLFW2_t() override
@@ -197,10 +212,19 @@ namespace wonder_rabbit_project
           -> void
         { ps.put( "title" , "some other wonderland with GLFW2" ); }
         
+        
+        auto default_initialize_params_window_position(initialize_params_t& ps)
+          -> void
+        {
+          ps.put( "x" , 0 );
+          ps.put( "y" , 0 );
+        }
+        
         auto default_initialize_params() const
           -> initialize_params_t override
         {
           initialize_params_t ps;
+          default_initialize_params_window_position(ps);
           default_initialize_params_window_title(ps);
           default_initialize_params_window_hints(ps);
           default_initialize_params_create_window(ps);
@@ -214,6 +238,7 @@ namespace wonder_rabbit_project
           initialize_window_hints(ps);
           initialize_open_window(ps);
           initialize_set_window_title(ps);
+          window_position(ps);
           initialize_set_keyboard_callback();
         }
         
