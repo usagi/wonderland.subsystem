@@ -1,8 +1,6 @@
 #pragma once
 
 #include <forward_list>
-#include <unordered_map>
-#include <limits>
 
 #include <SDL2/SDL.h>
 
