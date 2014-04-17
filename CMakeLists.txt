@@ -120,9 +120,11 @@ if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "Emscripten")
     target_link_libraries(${TARGET} GL)
     target_link_libraries(${TARGET} X11 Xrandr Xcursor Xi Xxf86vm)
   elseif(SUBSYSTEM MATCHES SDL2)
-    
+    find_library(SDL2_LIBRARY SDL2 REQUIRED)
+    target_link_libraries(${TARGET} ${SDL2_LIBRARY})
   elseif(SUBSYSTEM MATCHES SDL1)
-    
+    find_library(SDL1_LIBRARY SDL REQUIRED)
+    target_link_libraries(${TARGET} ${SDL1_LIBRARY})
   elseif(SUBSYSTEM MATCHES GLUT)
     
   endif()
