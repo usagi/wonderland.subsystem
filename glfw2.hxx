@@ -59,16 +59,19 @@ namespace wonder_rabbit_project
           const auto get = [&ps, &dps](const char* name)
           { return ps.get(name, dps.get<int>(name)); };
           
-          glfwOpenWindowHint( GLFW_REFRESH_RATE , get("refresh_rate" ) );
-          glfwOpenWindowHint( GLFW_ACCUM_RED_BITS , get("accum_red_bits" ) );
+          const auto get_bool_as_int = [&ps, &dps](const char* name)
+          { return int(ps.get(name, dps.get<bool>(name))); };
+          
+          glfwOpenWindowHint( GLFW_REFRESH_RATE     , get("refresh_rate" ) );
+          glfwOpenWindowHint( GLFW_ACCUM_RED_BITS   , get("accum_red_bits" ) );
           glfwOpenWindowHint( GLFW_ACCUM_GREEN_BITS , get("accum_green_bits" ) );
-          glfwOpenWindowHint( GLFW_ACCUM_BLUE_BITS , get("accum_blue_bits" ) );
+          glfwOpenWindowHint( GLFW_ACCUM_BLUE_BITS  , get("accum_blue_bits" ) );
           glfwOpenWindowHint( GLFW_ACCUM_ALPHA_BITS , get("accum_alpha_bits" ) );
-          glfwOpenWindowHint( GLFW_AUX_BUFFERS , get("aux_buffers" ) );
-          glfwOpenWindowHint( GLFW_STEREO , get("stereo" ) );
+          glfwOpenWindowHint( GLFW_AUX_BUFFERS      , get("aux_buffers" ) );
+          glfwOpenWindowHint( GLFW_STEREO           , get_bool_as_int("stereo" ) );
           
           // GLFW3 convertiblity, but GLFW2 name is GLFW_WINDOW_NO_RESIZE and value is reversed.
-          glfwOpenWindowHint( GLFW_WINDOW_NO_RESIZE , not get("resizable") );
+          glfwOpenWindowHint( GLFW_WINDOW_NO_RESIZE , not get_bool_as_int("resizable") );
           
           // GLFW3 convertiblity, but GLFW2 name is GLFW_FSAA_SAMPLES.
           glfwOpenWindowHint( GLFW_FSAA_SAMPLES , get("samples" ) );
@@ -78,8 +81,8 @@ namespace wonder_rabbit_project
           // GLFW3 convertiblity, but GLFW2 name is GLFW_OPENGL_VERSION_MINOR and default value is 1(GLLFW3 is 0).
           glfwOpenWindowHint( GLFW_OPENGL_VERSION_MINOR , get("context_version_minor" ) );
           
-          glfwOpenWindowHint( GLFW_OPENGL_FORWARD_COMPAT , get("opengl_forward_compat" ) );
-          glfwOpenWindowHint( GLFW_OPENGL_DEBUG_CONTEXT , get("opengl_debug_context" ) );
+          glfwOpenWindowHint( GLFW_OPENGL_FORWARD_COMPAT , get_bool_as_int("opengl_forward_compat" ) );
+          glfwOpenWindowHint( GLFW_OPENGL_DEBUG_CONTEXT  , get_bool_as_int("opengl_debug_context" ) );
           // GLFW3 convertiblity, but GLFW2 default value is 0(GLFW3 defined GLFW_OPENGL_ANY_PROFILE to 0).
           glfwOpenWindowHint( GLFW_OPENGL_PROFILE , get("opengl_profile" ) );
         }
@@ -183,16 +186,16 @@ namespace wonder_rabbit_project
         auto default_initialize_params_window_hints(initialize_params_t& ps) const
           -> void
         {
-          ps.put( "refresh_rate" , 0 );
-          ps.put( "accum_red_bits" , 0 );
+          ps.put( "refresh_rate"     , 0 );
+          ps.put( "accum_red_bits"   , 0 );
           ps.put( "accum_green_bits" , 0 );
-          ps.put( "accum_blue_bits" , 0 );
+          ps.put( "accum_blue_bits"  , 0 );
           ps.put( "accum_alpha_bits" , 0 );
-          ps.put( "aux_buffers" , 0 );
-          ps.put( "stereo" , GL_FALSE );
+          ps.put( "aux_buffers"      , 0 );
+          ps.put( "stereo"           , false );
           
           // GLFW3 convertiblity, but GLFW2 name is GLFW_WINDOW_NO_RESIZE and value is reversed.
-          ps.put( "resizable" , GL_TRUE );
+          ps.put( "resizable" , true );
           
           // GLFW3 convertiblity, but GLFW2 name is GLFW_FSAA_SAMPLES.
           ps.put( "samples" , 0 );
@@ -202,8 +205,8 @@ namespace wonder_rabbit_project
           // GLFW3 convertiblity, but GLFW2 name is GLFW_OPENGL_VERSION_MINOR and default value is 1(GLLFW3 is 0).
           ps.put( "context_version_minor" , 1 );
           
-          ps.put( "opengl_forward_compat" , GL_FALSE );
-          ps.put( "opengl_debug_context" , GL_FALSE );
+          ps.put( "opengl_forward_compat" , false );
+          ps.put( "opengl_debug_context"  , false );
           // GLFW3 convertiblity, but GLFW2 default value is 0(GLFW3 defined GLFW_OPENGL_ANY_PROFILE to 0).
           ps.put( "opengl_profile" , 0 );
         }

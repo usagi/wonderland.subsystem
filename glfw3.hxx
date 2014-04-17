@@ -72,31 +72,34 @@ namespace wonder_rabbit_project
           const auto get = [&ps, &dps](const char* name)
           { return ps.get(name, dps.get<int>(name)); };
           
-          glfwWindowHint( GLFW_RESIZABLE , get("resizable") );
-          glfwWindowHint( GLFW_VISIBLE   , get("visible" ) );
-          glfwWindowHint( GLFW_DECORATED , get("decorated" ) );
-          glfwWindowHint( GLFW_RED_BITS , get("red_bits" ) );
-          glfwWindowHint( GLFW_GREEN_BITS , get("green_bits" ) );
-          glfwWindowHint( GLFW_BLUE_BITS , get("blue_bits" ) );
-          glfwWindowHint( GLFW_ALPHA_BITS , get("alpha_bits" ) );
-          glfwWindowHint( GLFW_DEPTH_BITS , get("depth_bits" ) );
-          glfwWindowHint( GLFW_STENCIL_BITS , get("stencil_bits" ) );
-          glfwWindowHint( GLFW_ACCUM_RED_BITS , get("accum_red_bits" ) );
+          const auto get_bool_as_int = [&ps, &dps](const char* name)
+          { return int(ps.get(name, dps.get<bool>(name))); };
+          
+          glfwWindowHint( GLFW_RESIZABLE , get_bool_as_int("resizable") );
+          glfwWindowHint( GLFW_VISIBLE   , get_bool_as_int("visible" ) );
+          glfwWindowHint( GLFW_DECORATED , get_bool_as_int("decorated" ) );
+          glfwWindowHint( GLFW_RED_BITS         , get("red_bits" ) );
+          glfwWindowHint( GLFW_GREEN_BITS       , get("green_bits" ) );
+          glfwWindowHint( GLFW_BLUE_BITS        , get("blue_bits" ) );
+          glfwWindowHint( GLFW_ALPHA_BITS       , get("alpha_bits" ) );
+          glfwWindowHint( GLFW_DEPTH_BITS       , get("depth_bits" ) );
+          glfwWindowHint( GLFW_STENCIL_BITS     , get("stencil_bits" ) );
+          glfwWindowHint( GLFW_ACCUM_RED_BITS   , get("accum_red_bits" ) );
           glfwWindowHint( GLFW_ACCUM_GREEN_BITS , get("accum_green_bits" ) );
-          glfwWindowHint( GLFW_ACCUM_BLUE_BITS , get("accum_blue_bits" ) );
+          glfwWindowHint( GLFW_ACCUM_BLUE_BITS  , get("accum_blue_bits" ) );
           glfwWindowHint( GLFW_ACCUM_ALPHA_BITS , get("accum_alpha_bits" ) );
-          glfwWindowHint( GLFW_AUX_BUFFERS , get("aux_buffers" ) );
-          glfwWindowHint( GLFW_SAMPLES , get("samples" ) );
-          glfwWindowHint( GLFW_REFRESH_RATE , get("refresh_rate" ) );
-          glfwWindowHint( GLFW_STEREO , get("stereo" ) );
-          glfwWindowHint( GLFW_SRGB_CAPABLE , get("srgb_capable" ) );
-          glfwWindowHint( GLFW_CLIENT_API , get("client_api" ) );
+          glfwWindowHint( GLFW_AUX_BUFFERS      , get("aux_buffers" ) );
+          glfwWindowHint( GLFW_SAMPLES          , get("samples" ) );
+          glfwWindowHint( GLFW_REFRESH_RATE     , get("refresh_rate" ) );
+          glfwWindowHint( GLFW_STEREO           , get_bool_as_int("stereo" ) );
+          glfwWindowHint( GLFW_SRGB_CAPABLE     , get_bool_as_int("srgb_capable" ) );
+          glfwWindowHint( GLFW_CLIENT_API       , get("client_api" ) );
           glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR , get("context_version_major" ) );
           glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR , get("context_version_minor" ) );
-          glfwWindowHint( GLFW_CONTEXT_ROBUSTNESS , get("context_robustness" ) );
-          glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT , get("opengl_forward_compat" ) );
-          glfwWindowHint( GLFW_OPENGL_DEBUG_CONTEXT , get("opengl_debug_context" ) );
-          glfwWindowHint( GLFW_OPENGL_PROFILE , get("opengl_profile" ) );
+          glfwWindowHint( GLFW_CONTEXT_ROBUSTNESS    , get("context_robustness" ) );
+          glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT , get_bool_as_int("opengl_forward_compat" ) );
+          glfwWindowHint( GLFW_OPENGL_DEBUG_CONTEXT  , get_bool_as_int("opengl_debug_context" ) );
+          glfwWindowHint( GLFW_OPENGL_PROFILE        , get("opengl_profile" ) );
         }
         
         auto initialize_create_window(initialize_params_t& ps) -> void
@@ -195,30 +198,30 @@ namespace wonder_rabbit_project
           -> void
         {
           // http://www.glfw.org/docs/latest/window.html#window_hints_values
-          ps.put( "resizable" , GL_TRUE );
-          ps.put( "visible" , GL_TRUE );
-          ps.put( "decorated" , GL_TRUE );
-          ps.put( "red_bits" , 8 );
-          ps.put( "green_bits" , 8 );
-          ps.put( "blue_bits" , 8 );
-          ps.put( "alpha_bits" , 8 );
-          ps.put( "depth_bits" , 24 );
-          ps.put( "stencil_bits" , 8 );
-          ps.put( "accum_red_bits" , 0 );
+          ps.put( "resizable"        , true );
+          ps.put( "visible"          , true );
+          ps.put( "decorated"        , true );
+          ps.put( "red_bits"         , 8 );
+          ps.put( "green_bits"       , 8 );
+          ps.put( "blue_bits"        , 8 );
+          ps.put( "alpha_bits"       , 8 );
+          ps.put( "depth_bits"       , 24 );
+          ps.put( "stencil_bits"     , 8 );
+          ps.put( "accum_red_bits"   , 0 );
           ps.put( "accum_green_bits" , 0 );
-          ps.put( "accum_blue_bits" , 0 );
+          ps.put( "accum_blue_bits"  , 0 );
           ps.put( "accum_alpha_bits" , 0 );
-          ps.put( "aux_buffers" , 0 );
-          ps.put( "samples" , 0 );
+          ps.put( "aux_buffers"  , 0 );
+          ps.put( "samples"      , 0 );
           ps.put( "refresh_rate" , 0 );
-          ps.put( "stereo" , GL_FALSE );
-          ps.put( "srgb_capable" , GL_FALSE );
-          ps.put( "client_api" , GLFW_OPENGL_API );
+          ps.put( "stereo"       , false );
+          ps.put( "srgb_capable" , false );
+          ps.put( "client_api"   , GLFW_OPENGL_API );
           ps.put( "context_version_major" , 1 );
           ps.put( "context_version_minor" , 0 );
-          ps.put( "context_robustness" , GLFW_NO_ROBUSTNESS );
-          ps.put( "opengl_forward_compat" , GL_FALSE );
-          ps.put( "opengl_debug_context" , GL_FALSE );
+          ps.put( "context_robustness"    , GLFW_NO_ROBUSTNESS );
+          ps.put( "opengl_forward_compat" , false );
+          ps.put( "opengl_debug_context"  , false );
           ps.put( "opengl_profile" , GLFW_OPENGL_ANY_PROFILE );
         }
         
