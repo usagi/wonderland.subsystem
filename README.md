@@ -14,12 +14,25 @@ developing in the master branch currently.
 
 ## currently support
 
-- GLFW3
-- GLFW2
+- compiler
+    - g++-4.8
+    - clang++-3.2
+    - em++-1.14
+
+- subsystem
+    - GLFW3
+    - GLFW2
 
 ## dependancy
 
-- Boost.
+- Boost.PropertyTree
+
+- optional (need one of these)
+    - GLFW3
+    - GLFW2
+    - SDL2
+    - SDL1
+    - GLUT
 
 ## license
 
