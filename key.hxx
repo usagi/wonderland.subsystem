@@ -71,7 +71,7 @@ namespace wonder_rabbit_project
         , keyboard_non_us_number_mark_and_tilde , non_us_number_mark = keyboard_non_us_number_mark_and_tilde // ~
         , keyboard_semicolon_and_colon          , semicolon = keyboard_semicolon_and_colon, colon = keyboard_semicolon_and_colon // ; :
         , keyboard_single_quotation_and_double_quotation, single_quotation = keyboard_single_quotation_and_double_quotation, double_quotation = keyboard_single_quotation_and_double_quotation // ' "
-        , keyboard_grave_accent_and_tilde      , grave_accent = keyboard_grave_accent_and_tilde, 
+        , keyboard_grave_accent_and_tilde      , grave_accent = keyboard_grave_accent_and_tilde
         , keyboard_comma_and_angle_bracket_open, comma = keyboard_comma_and_angle_bracket_open, angle_bracket_open = keyboard_comma_and_angle_bracket_open // , <
         , keyboard_dot_and_angle_bracket_close , dot = keyboard_dot_and_angle_bracket_close, angle_bracket_close = keyboard_dot_and_angle_bracket_close // . >
         , keyboard_slash_and_question          , slash = keyboard_slash_and_question, question = keyboard_slash_and_question // / ?
@@ -192,14 +192,14 @@ namespace wonder_rabbit_project
         , keyboard_right_alt    , right_alt     = keyboard_right_alt
         , keyboard_right_gui    , right_gui     = keyboard_right_gui
         // Japanese key-top support
-        japanese_katakana_hiragana = keyboard_internatinal2
-        japanese_caret             = keyboard_equal_and_plus
-        japanese_yen               = keyboard_internatinal3
-        japanese_atmark            = keyboard_box_bracket_open_and_curly_bracket_open
-        japanese_box_bracket_open  = keyboard_box_bracket_close_and_curly_bracket_close
-        japanese_colon             = keyboard_single_quotation_and_double_quotation
-        japanese_henkan            = keyboard_internatinal4
-        japanese_hankaku_zenkaku   = keyboard_grave_accent_and_tilde
+        , japanese_katakana_hiragana = keyboard_international2
+        , japanese_caret             = keyboard_equal_and_plus
+        , japanese_yen               = keyboard_international3
+        , japanese_atmark            = keyboard_box_bracket_open_and_curly_bracket_open
+        , japanese_box_bracket_open  = keyboard_box_bracket_close_and_curly_bracket_close
+        , japanese_colon             = keyboard_single_quotation_and_double_quotation
+        , japanese_henkan            = keyboard_international4
+        , japanese_hankaku_zenkaku   = keyboard_grave_accent_and_tilde
         };
       };
       

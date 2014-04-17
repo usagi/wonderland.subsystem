@@ -7,9 +7,17 @@
 #include <unordered_map>
 #include <forward_list>
 #include <vector>
+#include <mutex>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/optional.hpp>
+
+#ifdef EMSCRIPTEN
+namespace
+{
+  static std::mutex emscripten_main_loop_mutex;
+}
+#endif
 
 namespace wonder_rabbit_project
 {
@@ -138,25 +146,37 @@ namespace wonder_rabbit_project
           -> void
         {
           _to_continue = true;
-#ifdef EMSCRIPTEN  
-          emscripten_set_main_loop( []
+#ifdef EMSCRIPTEN
+          if( not ::emscripten_main_loop_mutex.try_lock() )
+            throw subsystem_runtime_error_t( "::emscripten_main_loop_mutex cannot lock" );
+          
+          emscripten_set_main_loop_arg( [](void* arg)
+          {
+            auto this_ = reinterpret_cast<subsystem_base_t*>(arg);
+            this_ -> invoke_step();
+            if ( not this_ -> to_continue() )
+            {
+              emscripten_cancel_main_loop();
+              ::emscripten_main_loop_mutex.unlock();
+            }
+          }
+          , this, 0, 1);
 #else
           do
-#endif
-          {
-            before_update();
-            update();
-            after_update();
-
-            before_render();
-            render();
-            after_render();
-          }
-#ifdef EMSCRIPTEN  
-          , 0, 1);
-#else
+            invoke_step();
           while ( to_continue() );
 #endif
+        }
+        
+        virtual auto invoke_step() -> void
+        {
+          before_update();
+          update();
+          after_update();
+
+          before_render();
+          render();
+          after_render();
         }
         
       };
