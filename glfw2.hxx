@@ -133,7 +133,7 @@ namespace wonder_rabbit_project
             {
               auto this_ = ::subsystems.front().lock();
               
-              const auto fixed_key = key_code_from_glfw(key);
+              const auto fixed_key = key_code_from_glfw2(key);
               if ( fixed_key )
                 this_ -> keyboard_state( fixed_key, bool(action) );
             }

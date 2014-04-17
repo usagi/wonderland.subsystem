@@ -137,8 +137,7 @@ namespace wonder_rabbit_project
             {
               auto this_ = ::window_owner_dictionary.at(window).lock();
               
-              // TODO: to use scancode with libWRP-key
-              const auto fixed_key = key_code_from_glfw(key);
+              const auto fixed_key = key_code_from_glfw3(key);
               if ( fixed_key )
                 this_ -> keyboard_state( fixed_key, bool(action) );
             }
