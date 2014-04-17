@@ -163,7 +163,8 @@ namespace wonder_rabbit_project
           //   0x2FFF0000: CENTERED
           
           glfwSetWindowPos
-          ( ps.get("x" , dps.get<int>("x") ) & 0x0000FFFF
+          ( _window
+          , ps.get("x" , dps.get<int>("x") ) & 0x0000FFFF
           , ps.get("y" , dps.get<int>("y") ) & 0x0000FFFF
           );
         }
@@ -221,7 +222,7 @@ namespace wonder_rabbit_project
           ps.put( "opengl_profile" , GLFW_OPENGL_ANY_PROFILE );
         }
         
-        auto default_initialize_params_window_position(initialize_params_t& ps)
+        auto default_initialize_params_window_position(initialize_params_t& ps) const
           -> void
         {
           // http://www.glfw.org/docs/latest/group__window.html#ga1abb6d690e8c88e0c8cd1751356dbca8

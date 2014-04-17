@@ -213,7 +213,7 @@ namespace wonder_rabbit_project
         { ps.put( "title" , "some other wonderland with GLFW2" ); }
         
         
-        auto default_initialize_params_window_position(initialize_params_t& ps)
+        auto default_initialize_params_window_position(initialize_params_t& ps) const
           -> void
         {
           ps.put( "x" , 0 );
