@@ -42,6 +42,8 @@ namespace wonder_rabbit_project
         
         dtor_hooks_t _dtor_hooks;
         
+        int _before_wheel_y = 0;
+        
         auto initialize_glfw() -> void
         {
           const auto r = glfwInit();
@@ -129,20 +131,6 @@ namespace wonder_rabbit_project
           glfwSetWindowTitle( ps.get("title", dps.get<std::string>("title")).data() );
         }
         
-        auto initialize_set_keyboard_callback() const -> void
-        {
-          glfwSetKeyCallback
-          ( [] ( int key, int action )
-            {
-              auto this_ = ::subsystems.front().lock();
-              
-              const auto fixed_key = key_code_from_glfw2(key);
-              if ( fixed_key )
-                this_ -> keyboard_state( fixed_key, bool(action) );
-            }
-          );
-        }
-        
         auto window_position(initialize_params_t ps) const -> void
         {
           initialize_params_t dps;
@@ -156,6 +144,53 @@ namespace wonder_rabbit_project
           ( ps.get("x" , dps.get<int>("x") ) & 0x0000FFFF
           , ps.get("y" , dps.get<int>("y") ) & 0x0000FFFF
           );
+        }
+        
+        auto process_input_states() -> void
+        {
+          process_input_states_keyboard();
+          process_input_states_pointing();
+        }
+        
+        auto process_input_states_keyboard() -> void
+        {
+          for ( int glfw2_key = GLFW_KEY_SPACE; glfw2_key < GLFW_KEY_LAST; ++glfw2_key )
+          { 
+            const auto action = glfwGetKey( glfw2_key );
+            const auto fixed_key = key_code_from_glfw2(glfw2_key);
+            keyboard_state( fixed_key, bool( action == GLFW_PRESS ) );
+          }
+        }
+        
+        auto process_input_states_pointing() -> void
+        {
+          pointing_states_button<0>( glfwGetMouseButton(0) );
+          pointing_states_button<1>( glfwGetMouseButton(1) );
+          pointing_states_button<2>( glfwGetMouseButton(2) );
+          pointing_states_button<3>( glfwGetMouseButton(3) );
+          pointing_states_button<4>( glfwGetMouseButton(4) );
+          pointing_states_button<5>( glfwGetMouseButton(5) );
+          pointing_states_button<6>( glfwGetMouseButton(6) );
+          pointing_states_button<7>( glfwGetMouseButton(7) );
+          
+          int x, y;
+          glfwGetMousePos( &x, &y );
+          pointing_states_position( { std::move(x), std::move(y) } );
+          
+          const auto wheel_y  = glfwGetMouseWheel();
+          const auto wheel_dy = wheel_y - _before_wheel_y;
+          _before_wheel_y = wheel_y;
+          
+          pointing_states_t::wheel_t wheel;
+          if ( wheel_dy > 0 )
+            wheel.y = 1;
+          else if ( wheel_dy < 0 )
+            wheel.y = -1;
+          else
+            wheel.y = 0;
+          
+          pointing_states_wheel( std::move(wheel) );
+          
         }
         
       public:
@@ -242,7 +277,7 @@ namespace wonder_rabbit_project
           initialize_open_window(ps);
           initialize_set_window_title(ps);
           window_position(ps);
-          initialize_set_keyboard_callback();
+          //initialize_set_scroll_callback();
         }
         
         auto after_render()
@@ -250,6 +285,7 @@ namespace wonder_rabbit_project
         {
           glfwSwapBuffers();
           glfwPollEvents();
+          process_input_states();
         }
         
         auto version() const

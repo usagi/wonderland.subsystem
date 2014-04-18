@@ -11,6 +11,9 @@
 
 #include <boost/property_tree/ptree.hpp>
 
+// https://github.com/g-truc/glm
+#include <glm/glm.hpp>
+
 #ifdef EMSCRIPTEN
 namespace
 {
@@ -45,6 +48,49 @@ namespace wonder_rabbit_project
         }
       };
       
+      class pointing_states_t
+      {
+      public:
+        friend class subsystem_base_t;
+        
+        static constexpr std::uint_fast8_t number_of_buttons = 8;
+        
+        using buttons_t  = std::vector<bool>;
+        using wheel_t    = glm::vec2;
+        using position_t = glm::vec2;
+        
+      private:
+        buttons_t  _buttons;
+        wheel_t    _wheel;
+        position_t _position;
+        
+      public:
+        
+        explicit pointing_states_t()
+          : _buttons(number_of_buttons)
+        { }
+        
+        template<unsigned T_button_number>
+        auto button() const
+          -> bool
+        {
+          static_assert(T_button_number < number_of_buttons, "must T_button_number < number_of_buttons");
+          return _buttons[T_button_number];
+        }
+        
+        auto button(unsigned button_number) const
+          -> bool
+        { return _buttons.at(button_number); }
+        
+        auto wheel() const
+          -> const wheel_t&
+        { return _wheel; }
+        
+        auto position() const
+          -> const position_t&
+        { return _position; }
+      };
+      
       class subsystem_base_t
         : public std::enable_shared_from_this<subsystem_base_t>
       {
@@ -73,7 +119,46 @@ namespace wonder_rabbit_project
       protected:
         
         keyboard_states_t _keyboard_states;
+        pointing_states_t _pointing_states;
         bool _to_continue;
+        
+        // write functions
+        
+        virtual auto keyboard_state(key_code_t keycode, bool action)
+          -> void
+        { _keyboard_states[keycode] = action; }
+        
+        virtual auto pointing_states(pointing_states_t&& ps)
+          -> void
+        { _pointing_states = std::move( ps ); }
+        
+        template <unsigned T_button_number>
+        auto pointing_states_button(const bool action)
+          -> void
+        {
+          static_assert(T_button_number < pointing_states_t::number_of_buttons, "must T_button_number < pointing_states_t::number_of_buttons");
+          _pointing_states._buttons[T_button_number] = action;
+        }
+        
+        virtual auto pointing_states_button(const unsigned button_number, const bool action)
+          -> void
+        { _pointing_states._buttons.at(button_number) = action; }
+        
+        virtual auto pointing_states_wheel(const pointing_states_t::wheel_t& wheel)
+          -> void
+        { _pointing_states._wheel = wheel; }
+        
+        virtual auto pointing_states_wheel(pointing_states_t::wheel_t&& wheel)
+          -> void
+        { _pointing_states._wheel = std::move(wheel); }
+        
+        virtual auto pointing_states_position(const pointing_states_t::position_t& position)
+          -> void
+        { _pointing_states._position = position; }
+        
+        virtual auto pointing_states_position(pointing_states_t::position_t&& position)
+          -> void
+        { _pointing_states._position = std::move(position); }
         
       public:
         
@@ -120,6 +205,8 @@ namespace wonder_rabbit_project
           -> void
         { _to_continue = b; }
         
+        // read functions
+        
         template<key_code_t T_keycode>
         inline auto keyboard_state() const 
           -> bool
@@ -133,13 +220,30 @@ namespace wonder_rabbit_project
           -> bool
         { return _keyboard_states[keycode]; }
         
-        virtual auto keyboard_state(key_code_t keycode, bool action)
-          -> void
-        { _keyboard_states[keycode] = action; }
-        
         virtual auto keyboard_states() const
           -> const keyboard_states_t&
         { return _keyboard_states; }
+        
+        virtual auto pointing_states() const
+          -> const pointing_states_t&
+        { return _pointing_states; }
+        
+        template <unsigned T_button_number>
+        auto pointing_states_button() const
+          -> bool
+        { return _pointing_states.button<T_button_number>(); }
+        
+        virtual auto pointing_states_button(const unsigned button_number) const
+          -> bool
+        { return _pointing_states.button(button_number); }
+        
+        virtual auto pointing_states_wheel() const
+          -> const pointing_states_t::wheel_t&
+        { return _pointing_states.wheel(); }
+        
+        virtual auto pointing_states_position() const
+          -> const pointing_states_t::position_t&
+        { return _pointing_states.position(); }
         
         virtual auto invoke()
           -> void

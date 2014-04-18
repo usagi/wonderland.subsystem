@@ -24,7 +24,6 @@ namespace wonder_rabbit_project
   {
     namespace subsystem
     {
-      
       struct glfw3_runtime_error_t
         : subsystem_runtime_error_t
       {
@@ -42,6 +41,11 @@ namespace wonder_rabbit_project
         dtor_hooks_t _dtor_hooks;
         
         GLFWwindow* _window;
+        
+      public:
+        pointing_states_t::wheel_t temporary_wheel;
+        
+      private:
         
         auto initialize_glfw() -> void
         {
@@ -132,19 +136,17 @@ namespace wonder_rabbit_project
         auto initialize_make_contex_current() const ->void
         { glfwMakeContextCurrent( _window ); }
         
-        auto initialize_set_keyboard_callback() const -> void
+        auto initialize_set_scroll_callback() const -> void
         {
-          glfwSetKeyCallback
-          ( _window
-          , [] ( GLFWwindow* window, int key, int scancode, int action, int mods )
-            {
-              auto this_ = ::window_owner_dictionary.at(window).lock();
-              
-              const auto fixed_key = key_code_from_glfw3(key);
-              if ( fixed_key )
-                this_ -> keyboard_state( fixed_key, bool(action) );
-            }
-          );
+          glfwSetScrollCallback( _window, [](GLFWwindow* window, double xoffset, double yoffset)
+          {
+            std::dynamic_pointer_cast<wonder_rabbit_project::wonderland::subsystem::GLFW3_t>
+            ( ::window_owner_dictionary
+                .at(window)
+                  .lock()
+            )
+              -> temporary_wheel = { std::move(xoffset), std::move(yoffset) };
+          } );
         }
         
         auto initialize_set_frame_buffer_size_callback() const -> void
@@ -170,6 +172,41 @@ namespace wonder_rabbit_project
           , ps.get("x" , dps.get<int>("x") ) & 0x0000FFFF
           , ps.get("y" , dps.get<int>("y") ) & 0x0000FFFF
           );
+        }
+        
+        auto process_input_states() -> void
+        {
+          process_input_states_keyboard();
+          process_input_states_pointing();
+        }
+        
+        auto process_input_states_keyboard() -> void
+        {
+          for ( int glfw3_key = GLFW_KEY_SPACE; glfw3_key < GLFW_KEY_LAST; ++glfw3_key )
+          { 
+            const auto action = glfwGetKey( _window, glfw3_key );
+            const auto fixed_key = key_code_from_glfw3(glfw3_key);
+            keyboard_state( fixed_key, bool( action == GLFW_PRESS ) );
+          }
+        }
+        
+        auto process_input_states_pointing() -> void
+        {
+          pointing_states_button<0>( glfwGetMouseButton( _window, 0) );
+          pointing_states_button<1>( glfwGetMouseButton( _window, 1) );
+          pointing_states_button<2>( glfwGetMouseButton( _window, 2) );
+          pointing_states_button<3>( glfwGetMouseButton( _window, 3) );
+          pointing_states_button<4>( glfwGetMouseButton( _window, 4) );
+          pointing_states_button<5>( glfwGetMouseButton( _window, 5) );
+          pointing_states_button<6>( glfwGetMouseButton( _window, 6) );
+          pointing_states_button<7>( glfwGetMouseButton( _window, 7) );
+          
+          double x, y;
+          glfwGetCursorPos( _window, &x, &y );
+          pointing_states_position( { std::move(x), std::move(y) } );
+          
+          pointing_states_wheel( std::move( temporary_wheel ) );
+          temporary_wheel = { 0, 0 };
         }
         
       public:
@@ -252,7 +289,7 @@ namespace wonder_rabbit_project
           initialize_create_window(ps);
           window_position(ps);
           initialize_make_contex_current();
-          initialize_set_keyboard_callback();
+          initialize_set_scroll_callback();
           initialize_set_frame_buffer_size_callback();
         }
         
@@ -261,6 +298,7 @@ namespace wonder_rabbit_project
         {
           glfwSwapBuffers( _window );
           glfwPollEvents();
+          process_input_states();
         }
         
         auto to_continue() const
@@ -280,7 +318,7 @@ namespace wonder_rabbit_project
         { return "GLFW3"; }
         
       };
-        
+      
 #ifndef WRP_WONDERLAND_SUBSYSTEM_T
 #define WRP_WONDERLAND_SUBSYSTEM_T
       using subsystem_t = GLFW3_t;

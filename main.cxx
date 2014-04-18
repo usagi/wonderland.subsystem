@@ -63,14 +63,41 @@ int main()
       std::cerr << "\n";
   };
   
+  const auto pointing_test = [ &subsystem ]
+  {
+    auto button_counter = 0;
+    for ( auto button = 0; button < 8; ++button )
+      if ( subsystem -> pointing_states_button( button ) )
+      {
+        ++button_counter;
+        std::cerr << "pointing_button[" << button << "] ";
+      }
+    
+    if ( button_counter )
+    {
+      const auto position = subsystem -> pointing_states_position();
+      std::cerr
+        << " with position("
+        << position.x << ", "
+        << position.y << ")\n";
+    }
+
+    const auto wheel = subsystem -> pointing_states_wheel();
+    if ( wheel.x not_eq 0 )
+      std::cerr << "wheel-dx: " << wheel.x << "\n";
+    if ( wheel.y not_eq 0 )
+      std::cerr << "wheel-dy: " << wheel.y << "\n";
+  };
+  
   const auto esc_to_exit = [ &subsystem ]
   {
     if ( subsystem -> keyboard_state< key::escape >() )
       subsystem -> to_continue( false );
   };
   
-  subsystem -> update_functors.emplace_front( key_test    );
-  subsystem -> update_functors.emplace_front( esc_to_exit );
+  subsystem -> update_functors.emplace_front( key_test      );
+  subsystem -> update_functors.emplace_front( pointing_test );
+  subsystem -> update_functors.emplace_front( esc_to_exit   );
   subsystem -> update_functors.emplace_front( []
   {
     // do update your world
