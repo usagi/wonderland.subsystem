@@ -128,6 +128,28 @@ namespace wonder_rabbit_project
             { case SDL_KEYDOWN:
               case SDL_KEYUP:
                 has_key_event = true;
+                break;
+              case SDL_MOUSEMOTION:
+                pointing_states_position( { e.motion.x, e.motion.y } );
+                break;
+              case SDL_MOUSEBUTTONDOWN:
+              case SDL_MOUSEBUTTONUP:
+              {
+                auto action = e.button.state == SDL_PRESSED;
+                switch ( e.button.button )
+                {
+                  case SDL_BUTTON_LEFT:
+                    pointing_states_button<0>(action);
+                    break;
+                  case SDL_BUTTON_RIGHT:
+                    pointing_states_button<1>(action);
+                    break;
+                  case SDL_BUTTON_MIDDLE:
+                    pointing_states_button<2>(action);
+                    break;
+                }
+                break;
+              }
             }
           
           if ( has_key_event )
@@ -138,12 +160,8 @@ namespace wonder_rabbit_project
         {
           using sdl_key_states_t = const std::uint8_t*;
           sdl_key_states_t sdl_key_states = SDL_GetKeyState(nullptr);
-          for ( auto n = SDLK_FIRST; n < SDLK_LAST; ++n)
-          {
-            if ( sdl_key_states[n] )
-              std::cerr << "*** in " << n << " ***";
+          for ( int n = SDLK_FIRST; n < SDLK_LAST; ++n)
             keyboard_state( key_code_from_sdl1(n), bool(sdl_key_states[n]) );
-          }
         }
         
       public:

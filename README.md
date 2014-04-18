@@ -33,6 +33,16 @@ developing in the master branch currently.
     - SDL2
     - SDL1
 
+## subsystem cannot supporting feature list
+
+- GLFW3
+- GLFW2
+    - pointing device wheel dx
+- SDL2
+    - pointing device wheel dx
+- SDL1
+    - pointing device wheel dx dy
+    
 ## license
 
 - GPLv3

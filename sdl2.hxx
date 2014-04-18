@@ -123,16 +123,46 @@ namespace wonder_rabbit_project
           SDL_Event e;
           
           bool has_key_event = false;
+          std::int32_t wheel_event_dx = 0;
+          std::int32_t wheel_event_dy = 0;
           
           while ( SDL_PollEvent(&e) )
             switch( e.type )
             { case SDL_KEYDOWN:
               case SDL_KEYUP:
                 has_key_event = true;
+                break;
+              case SDL_MOUSEMOTION:
+                pointing_states_position( { e.motion.x, e.motion.y } );
+                break;
+              case SDL_MOUSEBUTTONDOWN:
+              case SDL_MOUSEBUTTONUP:
+              {
+                auto action = e.button.state == SDL_PRESSED;
+                switch ( e.button.button )
+                {
+                  case SDL_BUTTON_LEFT:
+                    pointing_states_button<0>(action);
+                    break;
+                  case SDL_BUTTON_RIGHT:
+                    pointing_states_button<1>(action);
+                    break;
+                  case SDL_BUTTON_MIDDLE:
+                    pointing_states_button<2>(action);
+                    break;
+                }
+                break;
+              }
+              case SDL_MOUSEWHEEL:
+                wheel_event_dx = e.wheel.x;
+                wheel_event_dy = e.wheel.y;
+                break;
             }
           
           if ( has_key_event )
             process_events_keyevent();
+          
+          pointing_states_wheel( { wheel_event_dx, wheel_event_dy } );
         }
         
         auto process_events_keyevent() -> void
