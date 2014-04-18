@@ -1,7 +1,7 @@
 # wonderland.subsystem
 
 wonderland subsystem is commonize wrapper layer
- of a window management and an event polling
+ of a window management and an input event polling
  as GLFW3, GLFW2, SDL2, SDL1 and GLUT
  for standalone use and wonderland engine
  with PC(g++, clang++) and Emscripten(em++).
@@ -32,7 +32,6 @@ developing in the master branch currently.
     - GLFW2
     - SDL2
     - SDL1
-    - GLUT
 
 ## license
 

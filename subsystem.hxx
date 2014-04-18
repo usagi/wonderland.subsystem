@@ -12,6 +12,4 @@
   #include "sdl2.hxx"
 #elif defined(WRP_WONDERLAND_SUBSYSTEM_SDL1)
   #include "sdl1.hxx"
-#elif defined(WRP_WONDERLAND_SUBSYSTEM_GLUT)
-  #include "glut.hxx"
 #endif
