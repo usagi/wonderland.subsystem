@@ -272,7 +272,7 @@ namespace wonder_rabbit_project
           -> void
         {
           assert(snorm_value >= -1 and snorm_value <= 1);
-          joystick_digital_resize_by_index(number_of_joystick, number_of_analog);
+          joystick_analog_resize_by_index(number_of_joystick, number_of_analog);
           _joysticks_states[number_of_joystick]._analogs[number_of_analog] = snorm_value;
         }
         
@@ -378,6 +378,10 @@ namespace wonder_rabbit_project
         { return _pointing_states.position(); }
         
         //   joystick
+        virtual auto joysticks_states() const
+          -> const joysticks_states_t&
+        { return _joysticks_states; }
+        
         virtual auto joystick_states(const unsigned index) const
           -> const joystick_states_t
         { return _joysticks_states.at(index); }
