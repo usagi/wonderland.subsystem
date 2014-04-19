@@ -178,6 +178,7 @@ namespace wonder_rabbit_project
         {
           process_input_states_keyboard();
           process_input_states_pointing();
+          process_input_states_joystick();
         }
         
         auto process_input_states_keyboard() -> void
@@ -207,6 +208,33 @@ namespace wonder_rabbit_project
           
           pointing_states_wheel( std::move( temporary_wheel ) );
           temporary_wheel = { 0, 0 };
+        }
+        
+        auto process_input_states_joystick() -> void
+        {
+          for
+          ( int index_of_joystick = 0
+          ; glfwJoystickPresent(index_of_joystick) == GL_TRUE
+          ; ++index_of_joystick
+          )
+          {
+            { // digitals
+              int number_of_elements;
+              const auto actions = glfwGetJoystickButtons( index_of_joystick, &number_of_elements );
+              if ( actions not_eq nullptr )
+                for ( auto index_of_element = 0; index_of_element < number_of_elements; ++index_of_element )
+                  joystick_state_digital( index_of_joystick, index_of_element, bool(actions[index_of_element]) );
+            }
+            { // analogs
+              int number_of_elements;
+              const auto actions = glfwGetJoystickAxes( index_of_joystick, &number_of_elements );
+              if ( actions not_eq nullptr )
+                for ( auto index_of_element = 0; index_of_element < number_of_elements; ++index_of_element )
+                  joystick_state_analog( index_of_joystick, index_of_element, actions[index_of_element] );
+            }
+            // name
+            joystick_state_name( index_of_joystick, glfwGetJoystickName( index_of_joystick ) );
+          }
         }
         
       public:
