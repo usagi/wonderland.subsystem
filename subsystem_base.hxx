@@ -96,11 +96,15 @@ namespace wonder_rabbit_project
       {
         friend class subsystem_base_t;
         
+      public:
         using digitals_t = std::vector<bool>;
         using analogs_t  = std::vector<double>;
+        using name_t     = std::string;
         
+      private:
         digitals_t _digitals;
         analogs_t  _analogs;
+        name_t     _name;
         
         auto clear()
           -> void
@@ -134,6 +138,10 @@ namespace wonder_rabbit_project
         auto analog(unsigned number) const
           -> double
         { return _analogs.at(number); }
+        
+        auto name() const
+          -> std::string
+        { return _name; }
         
       };
       
@@ -266,6 +274,20 @@ namespace wonder_rabbit_project
           assert(snorm_value >= -1 and snorm_value <= 1);
           joystick_digital_resize_by_index(number_of_joystick, number_of_analog);
           _joysticks_states[number_of_joystick]._analogs[number_of_analog] = snorm_value;
+        }
+        
+        virtual auto joystick_state_name(const unsigned number_of_joystick, const std::string& name)
+          -> void
+        {
+          joysticks_resize_by_index(number_of_joystick);
+          _joysticks_states[number_of_joystick]._name = name;
+        }
+        
+        virtual auto joystick_state_name(const unsigned number_of_joystick, std::string&& name)
+          -> void
+        {
+          joysticks_resize_by_index(number_of_joystick);
+          _joysticks_states[number_of_joystick]._name = std::move(name);
         }
         
       public:
@@ -439,6 +461,10 @@ namespace wonder_rabbit_project
                  , index_x_of_analog + 2
                  );
         }
+        
+        virtual auto joystick_name( const unsigned index_of_joystick)
+          -> const std::string&
+        { return _joysticks_states.at(index_of_joystick)._name; }
         
         virtual auto invoke()
           -> void
