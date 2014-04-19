@@ -99,11 +99,15 @@ namespace wonder_rabbit_project
       public:
         using digitals_t = std::vector<bool>;
         using analogs_t  = std::vector<double>;
+        using balls_t    = std::vector<glm::vec2>;
+        using hats_t     = std::vector<glm::vec2>;
         using name_t     = std::string;
         
       private:
         digitals_t _digitals;
         analogs_t  _analogs;
+        balls_t    _balls;
+        hats_t     _hats;
         name_t     _name;
         
         auto clear()
@@ -222,11 +226,11 @@ namespace wonder_rabbit_project
         { _pointing_states._position = std::move(position); }
         
         //   joystick
-        virtual auto joysticks_resize_by_index(const unsigned index)
+        virtual auto joysticks_resize_by_index(const unsigned index_of_joystick)
           -> void
         {
-          if ( index >= _joysticks_states.size() )
-            _joysticks_states.resize( index + 1 );
+          if ( index_of_joystick >= _joysticks_states.size() )
+            _joysticks_states.resize( index_of_joystick + 1 );
         }
         
         virtual auto joystick_digital_resize_by_index(const unsigned index_of_joystick ,const unsigned index_of_digital)
@@ -247,33 +251,51 @@ namespace wonder_rabbit_project
             _joysticks_states[index_of_joystick]._analogs.resize( index_of_analog + 1 );
         }
         
-        virtual auto joystick_states(const unsigned number, const joystick_states_t& j )
+        virtual auto joystick_ball_resize_by_index(const unsigned index_of_joystick ,const unsigned index_of_ball)
+          -> void
+        {
+          joysticks_resize_by_index(index_of_joystick);
+          
+          if ( index_of_ball >= _joysticks_states[index_of_joystick]._balls.size() )
+            _joysticks_states[index_of_joystick]._balls.resize( index_of_ball + 1 );
+        }
+        
+        virtual auto joystick_hat_resize_by_index(const unsigned index_of_joystick ,const unsigned index_of_hat)
+          -> void
+        {
+          joysticks_resize_by_index(index_of_joystick);
+          
+          if ( index_of_hat >= _joysticks_states[index_of_joystick]._hats.size() )
+            _joysticks_states[index_of_joystick]._hats.resize( index_of_hat + 1 );
+        }
+        
+        virtual auto joystick_states(const unsigned index_of_joystick, const joystick_states_t& j )
           -> void
         { 
-          joysticks_resize_by_index(number);
-          _joysticks_states[number] = j;
+          joysticks_resize_by_index(index_of_joystick);
+          _joysticks_states[index_of_joystick] = j;
         }
         
-        virtual auto joystick_states(const unsigned number, joystick_states_t&& j )
+        virtual auto joystick_states(const unsigned index_of_joystick, joystick_states_t&& j )
           -> void
         {
-          joysticks_resize_by_index(number);
-          _joysticks_states.at(number) = std::move(j);
+          joysticks_resize_by_index(index_of_joystick);
+          _joysticks_states.at(index_of_joystick) = std::move(j);
         }
         
-        virtual auto joystick_state_digital(const unsigned number_of_joystick, const unsigned number_of_digital, const bool action)
+        virtual auto joystick_state_digital(const unsigned index_of_joystick, const unsigned index_of_digital, const bool action)
           -> void
         {
-          joystick_digital_resize_by_index(number_of_joystick, number_of_digital);
-          _joysticks_states[number_of_joystick]._digitals[number_of_digital] = action;
+          joystick_digital_resize_by_index(index_of_joystick, index_of_digital);
+          _joysticks_states[index_of_joystick]._digitals[index_of_digital] = action;
         }
         
-        virtual auto joystick_state_analog(const unsigned number_of_joystick, const unsigned number_of_analog, const double snorm_value)
+        virtual auto joystick_state_analog(const unsigned index_of_joystick, const unsigned index_of_analog, const double snorm_value)
           -> void
         {
           assert(snorm_value >= -1 and snorm_value <= 1);
-          joystick_analog_resize_by_index(number_of_joystick, number_of_analog);
-          _joysticks_states[number_of_joystick]._analogs[number_of_analog] = snorm_value;
+          joystick_analog_resize_by_index(index_of_joystick, index_of_analog);
+          _joysticks_states[index_of_joystick]._analogs[index_of_analog] = snorm_value;
         }
         
         virtual auto joystick_state_name(const unsigned number_of_joystick, const std::string& name)
@@ -281,6 +303,34 @@ namespace wonder_rabbit_project
         {
           joysticks_resize_by_index(number_of_joystick);
           _joysticks_states[number_of_joystick]._name = name;
+        }
+        
+        virtual auto joystick_state_ball(const unsigned index_of_joystick, const unsigned index_of_ball, const glm::vec2& value)
+          -> void
+        {
+          joystick_ball_resize_by_index(index_of_joystick, index_of_ball);
+          _joysticks_states[index_of_joystick]._balls[index_of_ball] = value;
+        }
+        
+        virtual auto joystick_state_ball(const unsigned index_of_joystick, const unsigned index_of_ball, glm::vec2&& value)
+          -> void
+        {
+          joystick_ball_resize_by_index(index_of_joystick, index_of_ball);
+          _joysticks_states[index_of_joystick]._balls[index_of_ball] = std::move(value);
+        }
+        
+        virtual auto joystick_state_hat(const unsigned index_of_joystick, const unsigned index_of_hat, const glm::vec2& value)
+          -> void
+        {
+          joystick_hat_resize_by_index(index_of_joystick, index_of_hat);
+          _joysticks_states[index_of_joystick]._hats[index_of_hat] = value;
+        }
+        
+        virtual auto joystick_state_hat(const unsigned index_of_joystick, const unsigned index_of_hat, glm::vec2&& value)
+          -> void
+        {
+          joystick_hat_resize_by_index(index_of_joystick, index_of_hat);
+          _joysticks_states[index_of_joystick]._hats[index_of_hat] = std::move(value);
         }
         
         virtual auto joystick_state_name(const unsigned number_of_joystick, std::string&& name)
@@ -465,6 +515,14 @@ namespace wonder_rabbit_project
                  , index_x_of_analog + 2
                  );
         }
+        
+        virtual auto joystick_state_ball(const unsigned index_of_joystick, const unsigned index_of_ball) const
+          -> const glm::vec2&
+        { return _joysticks_states.at(index_of_joystick)._balls.at(index_of_ball); }
+        
+        virtual auto joystick_state_hat(const unsigned index_of_joystick, const unsigned index_of_hat) const
+          -> const glm::vec2&
+        { return _joysticks_states.at(index_of_joystick)._hats.at(index_of_hat); }
         
         virtual auto joystick_name( const unsigned index_of_joystick)
           -> const std::string&

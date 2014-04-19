@@ -52,9 +52,11 @@ developing in the master branch currently.
 
 - GLFW3
     - [joystcik hat-switch](https://github.com/glfw/glfw/issues/278)
+    - joystick ball
     - joystcik name
 - GLFW2
     - joystcik hat-switch
+    - joystick ball
     - joystcik name
     - pointing device wheel dx
 - SDL2
