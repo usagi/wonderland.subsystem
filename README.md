@@ -33,7 +33,7 @@ developing in the master branch currently.
 - input management
     - commonized keyboard state (key-code convertible to USB HID Usage Page 9).
     - commonized pointing state
-        - 
+        - buttons : bool
         - wheel   : glm::vec2
         - position: glm::vec2
     
@@ -48,7 +48,7 @@ developing in the master branch currently.
     - [SDL2](http://www.libsdl.org/)
     - SDL1
 
-## subsystem cannot supporting feature list
+## can't supporting feature list
 
 - GLFW3
     - [joystcik hat-switch](https://github.com/glfw/glfw/issues/278)
@@ -66,6 +66,13 @@ developing in the master branch currently.
     - [pointing device wheel dy reversed](https://github.com/kripken/emscripten/issues/2303)
     - game controller device is not supported
         - hint: [HTML5 Gamepad API](https://dvcs.w3.org/hg/gamepad/raw-file/default/gamepad.html#gamepad-interface) is not support common web-browser in currently
+
+## backend API documentation link
+
+- GLFW3 http://www.glfw.org/docs/3.0/
+- GLFW2 http://www.glfw.org/GLFWReference27.pdf
+- SDL2 https://wiki.libsdl.org/APIByCategory
+- SDL1 http://www.libsdl.org/release/SDL-1.2.15/docs/html/
 
 ## license
 
