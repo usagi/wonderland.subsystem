@@ -41,6 +41,7 @@ developing in the master branch currently.
 
 - [Boost.PropertyTree](http://www.boost.org/doc/libs/1_55_0/doc/html/property_tree.html)
 - [glm](https://github.com/g-truc/glm)
+- [Sprout](https://github.com/bolero-MURAKAMI/Sprout)
 
 - optional (need one of these)
     - [GLFW3](http://www.glfw.org/)

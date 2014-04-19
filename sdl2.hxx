@@ -2,6 +2,8 @@
 
 #include <forward_list>
 
+#include <sprout/math/sqrt.hpp>
+
 #include <SDL2/SDL.h>
 
 #include "subsystem_base.hxx"
@@ -118,6 +120,32 @@ namespace wonder_rabbit_project
           });
         }
         
+        auto initialize_joystick() -> void
+        {
+          const auto number_of_joysticks = SDL_NumJoysticks();
+          
+          for ( auto index_of_joystick = 0; index_of_joystick < number_of_joysticks; ++index_of_joystick )
+          {
+            const auto joystick = SDL_JoystickOpen( index_of_joystick );
+            
+            joystick_state_name( index_of_joystick, SDL_JoystickNameForIndex( index_of_joystick ) );
+            if ( auto n = SDL_JoystickNumButtons( joystick ) )
+              joystick_state_digital( index_of_joystick, n - 1, false );
+            if ( auto n = SDL_JoystickNumAxes   ( joystick ) )
+              joystick_state_analog ( index_of_joystick, n - 1, 0.    );
+            if ( auto n = SDL_JoystickNumBalls  ( joystick ) )
+              joystick_state_ball   ( index_of_joystick, n - 1, {}    );
+            if ( auto n = SDL_JoystickNumHats   ( joystick ) )
+              joystick_state_hat    ( index_of_joystick, n - 1, {}    );
+            
+            _dtor_hooks.emplace_front( [ joystick ]
+            {
+              if ( SDL_JoystickGetAttached( joystick ) )
+                SDL_JoystickClose( joystick );
+            });
+          }
+        }
+        
         auto process_events() -> void
         {
           SDL_Event e;
@@ -156,6 +184,74 @@ namespace wonder_rabbit_project
               case SDL_MOUSEWHEEL:
                 wheel_event_dx = e.wheel.x;
                 wheel_event_dy = e.wheel.y;
+                break;
+              case SDL_JOYAXISMOTION:
+                joystick_state_analog
+                ( e.jaxis.which
+                , e.jaxis.axis
+                , (double(e.jaxis.value) + .5) / 32767.5
+                );
+                break;
+              case SDL_JOYBALLMOTION:
+                joystick_state_ball
+                ( e.jball.which
+                , e.jball.ball
+                , { e.jball.xrel, e.jball.yrel }
+                );
+                break;
+              case SDL_JOYHATMOTION:
+              {
+                glm::vec2 hat;
+                
+                constexpr auto sqrt2div2 = sprout::math::sqrt(2.) / 2.;
+                
+                switch( e.jhat.value )
+                { case SDL_HAT_CENTERED:
+                    break;
+                  case SDL_HAT_UP:
+                    hat.y = 1;
+                    break;
+                  case SDL_HAT_RIGHT:
+                    hat.x = 1;
+                    break;
+                  case SDL_HAT_DOWN:
+                    hat.y = -1;
+                    break;
+                  case SDL_HAT_LEFT:
+                    hat.x = -1;
+                    break;
+                  case SDL_HAT_RIGHTUP:
+                    hat = { sqrt2div2 , sqrt2div2 };
+                    break;
+                  case SDL_HAT_RIGHTDOWN:
+                    hat = { sqrt2div2 , -sqrt2div2 };
+                    break;
+                  case SDL_HAT_LEFTUP:
+                    hat = { -sqrt2div2, sqrt2div2 };
+                    break;
+                  case SDL_HAT_LEFTDOWN:
+                    hat = { -sqrt2div2, -sqrt2div2 };
+                    break;
+                }
+                
+                joystick_state_hat
+                ( e.jhat.which
+                , e.jhat.hat
+                , std::move(hat)
+                );
+                
+                break;
+              }
+              case SDL_JOYBUTTONDOWN:
+              case SDL_JOYBUTTONUP:
+                joystick_state_digital
+                ( e.jbutton.which
+                , e.jbutton.button
+                , e.jbutton.state == SDL_PRESSED
+                );
+                break;
+              case SDL_JOYDEVICEADDED:
+              case SDL_JOYDEVICEREMOVED:
                 break;
             }
           
@@ -241,6 +337,7 @@ namespace wonder_rabbit_project
         {
           initialize_sdl(ps);
           initialize_create_window(ps);
+          initialize_joystick();
         }
         
         auto after_render()

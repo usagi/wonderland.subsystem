@@ -94,15 +94,28 @@ int main()
     {
       const auto& digitals = joystick.digitals();
       const auto& analogs  = joystick.analogs();
-      if( std::any_of(std::begin(digitals), std::end(digitals), [](const bool v){ return v; } ) )
+      const auto& balls    = joystick.balls();
+      const auto& hats     = joystick.hats();
+      
+      if
+      (  std::any_of(std::begin(digitals), std::end(digitals), [](const bool v){ return v; } ) 
+      or std::any_of(std::begin(hats), std::end(hats), [](const glm::vec2& v){ return v not_eq glm::vec2(); } )
+      )
       {
         std::cerr << joystick.name() << ": D{ ";
         for ( const auto digital : digitals )
           std::cerr << digital << " ";
         std::cerr << "} A{ ";
         for ( const auto analog  : analogs )
-          std::cerr << std::setw(6) << std::right << std::setprecision(3) << std::fixed << analog  << " ";
+          std::cerr << std::setw(5) << std::right << std::setprecision(2) << std::fixed << analog << " ";
+        std::cerr << "} B{ ";
+        for ( const auto ball    : balls )
+          std::cerr << "(" << ball.x << "," << ball.y << ") ";
+        std::cerr << "} H{ ";
+        for ( const auto hat     : hats )
+          std::cerr << "(" << hat.x  << "," << hat.y  << ") ";
         std::cerr << "}\n";
+        
       }
     }
   };
