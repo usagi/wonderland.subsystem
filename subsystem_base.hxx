@@ -127,6 +127,14 @@ namespace wonder_rabbit_project
           -> const analogs_t&
         { return _analogs; }
         
+        auto balls() const
+          -> const balls_t&
+        { return _balls; }
+        
+        auto hats() const
+          -> const hats_t&
+        { return _hats; }
+        
         auto size_of_digitals() const
           -> unsigned
         { return _digitals.size(); }
@@ -135,13 +143,21 @@ namespace wonder_rabbit_project
           -> unsigned
         { return _analogs.size(); }
         
-        auto digital(unsigned number) const
+        auto digital(unsigned index) const
           -> bool
-        { return _digitals.at(number); }
+        { return _digitals.at(index); }
         
-        auto analog(unsigned number) const
+        auto analog(unsigned index) const
           -> double
-        { return _analogs.at(number); }
+        { return _analogs.at(index); }
+        
+        auto ball(unsigned index) const
+          -> const glm::vec2&
+        { return _balls.at(index); }
+        
+        auto hats(unsigned index) const
+          -> const glm::vec2&
+        { return _hats.at(index); }
         
         auto name() const
           -> std::string
