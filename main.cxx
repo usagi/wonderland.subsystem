@@ -1,8 +1,7 @@
-// for adjust wait
 #include <chrono>
 #include <thread>
-// for showing an initialize setting
 #include <iostream>
+#include <iomanip>
 #include <boost/property_tree/ini_parser.hpp>
 
 #ifdef EMSCRIPTEN
@@ -49,7 +48,7 @@ int main()
   // invoke world pattern 1: consign main-loop to subsystem
   
   // set your world update code
-  const auto key_test = [ &subsystem ]
+  const auto keyboard_test = [ &subsystem ]
   {
     auto key_counter = 0;
     for ( auto key = 0; key < 255; ++key )
@@ -89,14 +88,34 @@ int main()
       std::cerr << "wheel-dy: " << wheel.y << "\n";
   };
   
+  const auto joystick_test = [ &subsystem ]
+  {
+    for ( const auto joystick : subsystem -> joysticks_states() )
+    {
+      const auto& digitals = joystick.digitals();
+      const auto& analogs  = joystick.analogs();
+      if( std::any_of(std::begin(digitals), std::end(digitals), [](const bool v){ return v; } ) )
+      {
+        std::cerr << joystick.name() << ": D{ ";
+        for ( const auto digital : digitals )
+          std::cerr << digital << " ";
+        std::cerr << "} A{ ";
+        for ( const auto analog  : analogs )
+          std::cerr << std::setw(6) << std::right << std::setprecision(3) << std::fixed << analog  << " ";
+        std::cerr << "}\n";
+      }
+    }
+  };
+  
   const auto esc_to_exit = [ &subsystem ]
   {
     if ( subsystem -> keyboard_state< key::escape >() )
       subsystem -> to_continue( false );
   };
   
-  subsystem -> update_functors.emplace_front( key_test      );
+  subsystem -> update_functors.emplace_front( keyboard_test );
   subsystem -> update_functors.emplace_front( pointing_test );
+  subsystem -> update_functors.emplace_front( joystick_test );
   subsystem -> update_functors.emplace_front( esc_to_exit   );
   subsystem -> update_functors.emplace_front( []
   {
