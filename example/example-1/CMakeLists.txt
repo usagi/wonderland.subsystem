@@ -87,19 +87,15 @@ elseif(CMAKE_BUILD_TYPE MATCHES relwithdebinfo)
   message(" * CXX_FLAGS: ${CXX_FLAGS}")
 endif()
 
-#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../include
-#  ${CMAKE_CURRENT_SOURCE_DIR}/../../libWRP-log/include
-#  ${CMAKE_CURRENT_SOURCE_DIR}/../../libWRP-time/include
-#  ${CMAKE_CURRENT_SOURCE_DIR}/../../libWRP-message/include
-#)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../include)
 
 message(" * target: ${TARGET}")
 message(" * source: ${SOURCE}")
 
 add_executable(${TARGET} ${SOURCE})
-#add_dependencies(${TARGET}
-#  ${CMAKE_CURRENT_SOURCE_DIR}/../../include/wonder_rabbit_project/wonderland.hxx
-#)
+add_dependencies(${TARGET}
+  ${CMAKE_CURRENT_SOURCE_DIR}/../../include/wonder_rabbit_project/wonderland.subsystem.hxx
+)
 
 if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "Emscripten")
   find_package(Threads)
@@ -129,4 +125,3 @@ if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "Emscripten")
     
   endif()
 endif()
-

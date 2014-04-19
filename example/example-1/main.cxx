@@ -13,7 +13,7 @@
 //#define WRP_WONDERLAND_SUBSYSTEM_GLFW2
 
 // include subsystem
-#include "subsystem.hxx"
+#include <wonder_rabbit_project/wonderland.subsystem.hxx>
 
 int main()
 {
