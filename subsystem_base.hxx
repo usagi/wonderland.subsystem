@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <cstdint>
 #include <stdexcept>
 #include <string>
@@ -91,6 +92,51 @@ namespace wonder_rabbit_project
         { return _position; }
       };
       
+      class joystick_states_t
+      {
+        friend class subsystem_base_t;
+        
+        using digitals_t = std::vector<bool>;
+        using analogs_t  = std::vector<double>;
+        
+        digitals_t _digitals;
+        analogs_t  _analogs;
+        
+        auto clear()
+          -> void
+        {
+          _digitals.clear();
+          _analogs.clear();
+        }
+        
+      public:
+        
+        auto digitals() const
+          -> const digitals_t&
+        { return _digitals; }
+        
+        auto analogs() const
+          -> const analogs_t&
+        { return _analogs; }
+        
+        auto size_of_digitals() const
+          -> unsigned
+        { return _digitals.size(); }
+        
+        auto size_of_analogs() const
+          -> unsigned
+        { return _analogs.size(); }
+        
+        auto digital(unsigned number) const
+          -> bool
+        { return _digitals.at(number); }
+        
+        auto analog(unsigned number) const
+          -> double
+        { return _analogs.at(number); }
+        
+      };
+      
       class subsystem_base_t
         : public std::enable_shared_from_this<subsystem_base_t>
       {
@@ -116,18 +162,25 @@ namespace wonder_rabbit_project
         using keyboard_states_t
           = std::vector<bool>;
           
+        using joysticks_states_t
+          = std::vector<joystick_states_t>;
+          
       protected:
         
         keyboard_states_t _keyboard_states;
         pointing_states_t _pointing_states;
+        joysticks_states_t _joysticks_states;
+        
         bool _to_continue;
         
         // write functions
         
+        //   keyboard
         virtual auto keyboard_state(key_code_t keycode, bool action)
           -> void
         { _keyboard_states[keycode] = action; }
         
+        //   pointing
         virtual auto pointing_states(pointing_states_t&& ps)
           -> void
         { _pointing_states = std::move( ps ); }
@@ -159,6 +212,61 @@ namespace wonder_rabbit_project
         virtual auto pointing_states_position(pointing_states_t::position_t&& position)
           -> void
         { _pointing_states._position = std::move(position); }
+        
+        //   joystick
+        virtual auto joysticks_resize_by_index(const unsigned index)
+          -> void
+        {
+          if ( index >= _joysticks_states.size() )
+            _joysticks_states.resize( index + 1 );
+        }
+        
+        virtual auto joystick_digital_resize_by_index(const unsigned index_of_joystick ,const unsigned index_of_digital)
+          -> void
+        {
+          joysticks_resize_by_index(index_of_joystick);
+          
+          if ( index_of_digital >= _joysticks_states[index_of_joystick]._digitals.size() )
+            _joysticks_states[index_of_joystick]._digitals.resize( index_of_digital + 1 );
+        }
+        
+        virtual auto joystick_analog_resize_by_index(const unsigned index_of_joystick ,const unsigned index_of_analog)
+          -> void
+        {
+          joysticks_resize_by_index(index_of_joystick);
+          
+          if ( index_of_analog >= _joysticks_states[index_of_joystick]._analogs.size() )
+            _joysticks_states[index_of_joystick]._analogs.resize( index_of_analog + 1 );
+        }
+        
+        virtual auto joystick_states(const unsigned number, const joystick_states_t& j )
+          -> void
+        { 
+          joysticks_resize_by_index(number);
+          _joysticks_states[number] = j;
+        }
+        
+        virtual auto joystick_states(const unsigned number, joystick_states_t&& j )
+          -> void
+        {
+          joysticks_resize_by_index(number);
+          _joysticks_states.at(number) = std::move(j);
+        }
+        
+        virtual auto joystick_state_digital(const unsigned number_of_joystick, const unsigned number_of_digital, const bool action)
+          -> void
+        {
+          joystick_digital_resize_by_index(number_of_joystick, number_of_digital);
+          _joysticks_states[number_of_joystick]._digitals[number_of_digital] = action;
+        }
+        
+        virtual auto joystick_state_analog(const unsigned number_of_joystick, const unsigned number_of_analog, const double snorm_value)
+          -> void
+        {
+          assert(snorm_value >= -1 and snorm_value <= 1);
+          joystick_digital_resize_by_index(number_of_joystick, number_of_analog);
+          _joysticks_states[number_of_joystick]._analogs[number_of_analog] = snorm_value;
+        }
         
       public:
         
@@ -207,6 +315,7 @@ namespace wonder_rabbit_project
         
         // read functions
         
+        //   keyboard
         template<key_code_t T_keycode>
         inline auto keyboard_state() const 
           -> bool
@@ -224,6 +333,7 @@ namespace wonder_rabbit_project
           -> const keyboard_states_t&
         { return _keyboard_states; }
         
+        //   pointing
         virtual auto pointing_states() const
           -> const pointing_states_t&
         { return _pointing_states; }
@@ -244,6 +354,91 @@ namespace wonder_rabbit_project
         virtual auto pointing_states_position() const
           -> const pointing_states_t::position_t&
         { return _pointing_states.position(); }
+        
+        //   joystick
+        virtual auto joystick_states(const unsigned index) const
+          -> const joystick_states_t
+        { return _joysticks_states.at(index); }
+        
+        virtual auto joystick_state_digital(const unsigned index_of_joystick, const unsigned index_of_digital) const
+          -> const bool
+        { return _joysticks_states.at(index_of_joystick)._digitals.at(index_of_digital); }
+        
+        virtual auto joystick_state_analog(const unsigned index_of_joystick, const unsigned index_of_analog) const
+          -> const double
+        { return _joysticks_states.at(index_of_joystick)._analogs.at(index_of_analog); }
+        
+        virtual auto joystick_state_axes2_from_analogs
+        ( const unsigned index_of_joystick
+        , const unsigned index_x_of_analog
+        , const unsigned index_y_of_analog
+        ) const
+          -> const glm::vec2
+        {
+          const auto& j = _joysticks_states.at( index_of_joystick );
+          return
+          { j._analogs.at( index_x_of_analog )
+          , j._analogs.at( index_y_of_analog )
+          };
+        }
+        
+        virtual auto joystick_state_axes2_from_analogs
+        ( const unsigned index_of_joystick
+        , const unsigned index_x_of_analog
+        ) const
+          -> const glm::vec2
+        {
+          return joystick_state_axes2_from_analogs
+                 ( index_of_joystick
+                 , index_x_of_analog
+                 , index_x_of_analog + 1
+                 );
+        }
+        
+        virtual auto joystick_state_axes3_from_analogs
+        ( const unsigned index_of_joystick
+        , const unsigned index_x_of_analog
+        , const unsigned index_y_of_analog
+        , const unsigned index_z_of_analog
+        ) const
+          -> const glm::vec3
+        {
+          const auto& j = _joysticks_states.at( index_of_joystick );
+          return
+          { j._analogs.at( index_x_of_analog )
+          , j._analogs.at( index_y_of_analog )
+          , j._analogs.at( index_z_of_analog )
+          };
+        }
+        
+        virtual auto joystick_state_axes3_from_analogs
+        ( const unsigned index_of_joystick
+        , const unsigned index_x_of_analog
+        , const unsigned index_y_of_analog
+        ) const
+          -> const glm::vec3
+        {
+          return joystick_state_axes3_from_analogs
+                 ( index_of_joystick
+                 , index_x_of_analog
+                 , index_y_of_analog
+                 , index_y_of_analog + 1
+                 );
+        }
+        
+        virtual auto joystick_state_axes3_from_analogs
+        ( const unsigned index_of_joystick
+        , const unsigned index_x_of_analog
+        ) const
+          -> const glm::vec3
+        {
+          return joystick_state_axes3_from_analogs
+                 ( index_of_joystick
+                 , index_x_of_analog
+                 , index_x_of_analog + 1
+                 , index_x_of_analog + 2
+                 );
+        }
         
         virtual auto invoke()
           -> void
