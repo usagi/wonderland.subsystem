@@ -120,6 +120,19 @@ namespace wonder_rabbit_project
           {
             SDL_DestroyWindow( window );
           });
+          
+          if ( flag & SDL_WINDOW_OPENGL )
+          {
+            const auto sdl_gl_context = SDL_GL_CreateContext( window );
+            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+            
+            _dtor_hooks.emplace_front( [ sdl_gl_context ]
+            {
+              SDL_GL_DeleteContext( sdl_gl_context );
+            });
+          }
         }
         
         auto initialize_joystick() -> void
@@ -323,7 +336,7 @@ namespace wonder_rabbit_project
           ps.put( "SDL.window_opengl"        , true  );
           ps.put( "SDL.window_minimized"     , false );
           ps.put( "SDL.window_maximized"     , false );
-          ps.put( "SDL.window_input_grabbed" , true  );
+          ps.put( "SDL.window_input_grabbed" , false );
 #if SDL_VERSION_ATLEAST( 2 , 0 , 1 )
           ps.put( "SDL.window_allow_highdpi" , false );
 #endif
