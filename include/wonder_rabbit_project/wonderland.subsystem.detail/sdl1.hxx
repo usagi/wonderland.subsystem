@@ -108,10 +108,25 @@ namespace wonder_rabbit_project
               , bpp
               , flag
               );
-          
+              
           if ( not surface )
             throw sdl1_runtime_error_t
             ( "SDL_CreateWindow failed. window is nullptr." );
+          
+          /*
+          if ( flag & SDL_WINDOW_OPENGL )
+          {
+            const auto sdl_gl_context = SDL_GL_CreateContext( window );
+            //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+            //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+            //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+            
+            _dtor_hooks.emplace_front( [ sdl_gl_context ]
+            {
+              SDL_GL_DeleteContext( sdl_gl_context );
+            });
+          }
+          */
         }
         
         auto initialize_set_caption(initialize_params_t ps)
@@ -132,7 +147,11 @@ namespace wonder_rabbit_project
           {
             const auto joystick = SDL_JoystickOpen( index_of_joystick );
             
+  #if SDL_VERSION_ATLEAST(1,3,0)
             joystick_state_name( index_of_joystick, SDL_JoystickNameForIndex( index_of_joystick ) );
+  #else
+            joystick_state_name( index_of_joystick, SDL_JoystickName( index_of_joystick ) );
+  #endif
             if ( auto n = SDL_JoystickNumButtons( joystick ) )
               joystick_state_digital( index_of_joystick, n - 1, false );
             if ( auto n = SDL_JoystickNumAxes   ( joystick ) )
@@ -144,7 +163,9 @@ namespace wonder_rabbit_project
             
             _dtor_hooks.emplace_front( [ joystick ]
             {
+  #if SDL_VERSION_ATLEAST(1,3,0)
               if ( SDL_JoystickGetAttached( joystick ) )
+  #endif
                 SDL_JoystickClose( joystick );
             });
           }
@@ -250,9 +271,11 @@ namespace wonder_rabbit_project
                 , e.jbutton.state == SDL_PRESSED
                 );
                 break;
+  #if SDL_VERSION_ATLEAST(1,3,0)
               case SDL_JOYDEVICEADDED:
               case SDL_JOYDEVICEREMOVED:
                 break;
+  #endif
 #endif
             }
           
@@ -357,6 +380,7 @@ namespace wonder_rabbit_project
           -> void override
         {
           SDL_UpdateRect( _surface, 0, 0, 0, 0 );
+          SDL_GL_SwapBuffers( );
           process_events();
         }
         
