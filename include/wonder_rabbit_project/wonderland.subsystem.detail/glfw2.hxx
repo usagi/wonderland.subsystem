@@ -196,6 +196,7 @@ namespace wonder_rabbit_project
         
         auto process_input_states_joystick() -> void
         {
+#ifndef EMSCRIPTEN
           for
           ( int index_of_joystick = 0
           ; glfwGetJoystickParam( index_of_joystick, GLFW_PRESENT ) == GL_TRUE
@@ -221,6 +222,7 @@ namespace wonder_rabbit_project
             // name
             //joystick_state_name( index_of_joystick, glfwGetJoystickName( index_of_joystick ) );*/
           }
+#endif
         }
         
       public:

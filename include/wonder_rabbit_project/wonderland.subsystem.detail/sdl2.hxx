@@ -52,7 +52,9 @@ namespace wonder_rabbit_project
           set_flag( "SDL.init_timer", SDL_INIT_TIMER );
           set_flag( "SDL.init_audio", SDL_INIT_AUDIO );
           set_flag( "SDL.init_video", SDL_INIT_VIDEO );
+#ifndef EMSCRIPTEN
           set_flag( "SDL.init_joystick", SDL_INIT_JOYSTICK );
+#endif
           set_flag( "SDL.init_haptic"  , SDL_INIT_HAPTIC );
           set_flag( "SDL.init_gamecontroller", SDL_INIT_GAMECONTROLLER );
           set_flag( "SDL.init_events"        , SDL_INIT_EVENTS );
@@ -122,6 +124,7 @@ namespace wonder_rabbit_project
         
         auto initialize_joystick() -> void
         {
+#ifndef EMSCRIPTEN
           const auto number_of_joysticks = SDL_NumJoysticks();
           
           for ( auto index_of_joystick = 0; index_of_joystick < number_of_joysticks; ++index_of_joystick )
@@ -144,6 +147,7 @@ namespace wonder_rabbit_project
                 SDL_JoystickClose( joystick );
             });
           }
+#endif
         }
         
         auto process_events() -> void
@@ -185,6 +189,7 @@ namespace wonder_rabbit_project
                 wheel_event_dx = e.wheel.x;
                 wheel_event_dy = e.wheel.y;
                 break;
+#ifndef EMSCRIPTEN
               case SDL_JOYAXISMOTION:
                 joystick_state_analog
                 ( e.jaxis.which
@@ -253,6 +258,7 @@ namespace wonder_rabbit_project
               case SDL_JOYDEVICEADDED:
               case SDL_JOYDEVICEREMOVED:
                 break;
+#endif
             }
           
           if ( has_key_event )

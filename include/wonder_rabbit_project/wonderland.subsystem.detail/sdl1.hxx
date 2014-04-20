@@ -49,8 +49,12 @@ namespace wonder_rabbit_project
           set_flag( "SDL.init_timer", SDL_INIT_TIMER );
           set_flag( "SDL.init_audio", SDL_INIT_AUDIO );
           set_flag( "SDL.init_video", SDL_INIT_VIDEO );
+#ifndef EMSCRIPTEN
           set_flag( "SDL.init_cdrom", SDL_INIT_CDROM );
+#endif
+#ifndef EMSCRIPTEN
           set_flag( "SDL.init_joystick", SDL_INIT_JOYSTICK );
+#endif
           set_flag( "SDL.init_everything" , SDL_INIT_EVERYTHING );
           set_flag( "SDL.init_noparachute", SDL_INIT_NOPARACHUTE );
           
@@ -121,6 +125,7 @@ namespace wonder_rabbit_project
         
         auto initialize_joystick() -> void
         {
+#ifndef EMSCRIPTEN
           const auto number_of_joysticks = SDL_NumJoysticks();
           
           for ( auto index_of_joystick = 0; index_of_joystick < number_of_joysticks; ++index_of_joystick )
@@ -143,6 +148,7 @@ namespace wonder_rabbit_project
                 SDL_JoystickClose( joystick );
             });
           }
+#endif
         }
         
         auto process_events() -> void
@@ -178,6 +184,7 @@ namespace wonder_rabbit_project
                 }
                 break;
               }
+#ifndef EMSCRIPTEN
               case SDL_JOYAXISMOTION:
                 joystick_state_analog
                 ( e.jaxis.which
@@ -246,6 +253,7 @@ namespace wonder_rabbit_project
               case SDL_JOYDEVICEADDED:
               case SDL_JOYDEVICEREMOVED:
                 break;
+#endif
             }
           
           if ( has_key_event )
@@ -255,8 +263,16 @@ namespace wonder_rabbit_project
         auto process_events_keyevent() -> void
         {
           using sdl_key_states_t = const std::uint8_t*;
+#if SDL_VERSION_ATLEAST(1,3,0)
+          sdl_key_states_t sdl_key_states = SDL_GetKeyboardState(nullptr);
+#else
           sdl_key_states_t sdl_key_states = SDL_GetKeyState(nullptr);
+#endif
+#if SDL_VERSION_ATLEAST(1,3,0)
+          for ( int n = SDLK_UNKNOWN; n < SDLK_LAST; ++n)
+#else
           for ( int n = SDLK_FIRST; n < SDLK_LAST; ++n)
+#endif
             keyboard_state( key_code_from_sdl1(n), bool(sdl_key_states[n]) );
         }
         
