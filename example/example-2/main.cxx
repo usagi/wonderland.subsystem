@@ -63,14 +63,11 @@ namespace
     const auto assert_program = [](GLuint program, const std::string& message)
     {
       GLint status;
-std::cerr << "z";
       glGetProgramiv( program, GL_LINK_STATUS, &status );
       if ( not status )
       {
         GLsizei buffer_size;
-std::cerr << "a";
         glGetProgramiv( program, GL_INFO_LOG_LENGTH, &buffer_size );
-std::cerr << "b";
         std::string log;
         if ( buffer_size )
         {
