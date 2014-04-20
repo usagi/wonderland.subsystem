@@ -124,9 +124,9 @@ namespace wonder_rabbit_project
           if ( flag & SDL_WINDOW_OPENGL )
           {
             const auto sdl_gl_context = SDL_GL_CreateContext( window );
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+            //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+            //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+            //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
             
             _dtor_hooks.emplace_front( [ sdl_gl_context ]
             {
