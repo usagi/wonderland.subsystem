@@ -362,7 +362,8 @@ namespace wonder_rabbit_project
         auto after_render()
           -> void override
         {
-          SDL_UpdateWindowSurface(_window);
+          SDL_UpdateWindowSurface( _window );
+          SDL_GL_SwapWindow( _window );
           process_events();
         }
         
