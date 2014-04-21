@@ -79,6 +79,9 @@ namespace wonder_rabbit_project
           const auto get_bool_as_int = [&ps, &dps](const char* name)
           { return int(ps.get(name, dps.get<bool>(name))); };
           
+          const auto get_string = [&ps, &dps](const char* name)
+          { return ps.get(name, dps.get<std::string>(name)); };
+          
           glfwWindowHint( GLFW_RESIZABLE , get_bool_as_int("resizable") );
           glfwWindowHint( GLFW_VISIBLE   , get_bool_as_int("visible" ) );
           glfwWindowHint( GLFW_DECORATED , get_bool_as_int("decorated" ) );
@@ -97,13 +100,35 @@ namespace wonder_rabbit_project
           glfwWindowHint( GLFW_REFRESH_RATE     , get("refresh_rate" ) );
           glfwWindowHint( GLFW_STEREO           , get_bool_as_int("stereo" ) );
           glfwWindowHint( GLFW_SRGB_CAPABLE     , get_bool_as_int("srgb_capable" ) );
-          glfwWindowHint( GLFW_CLIENT_API       , get("client_api" ) );
+          {
+            const auto client_api = get_string( "client_api" );
+            if ( client_api == "opengl" )
+              glfwWindowHint( GLFW_CLIENT_API, GLFW_OPENGL_API );
+            else if ( client_api == "opengl_es" )
+              glfwWindowHint( GLFW_CLIENT_API, GLFW_OPENGL_ES_API );
+          }
           glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR , get("context_version_major" ) );
           glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR , get("context_version_minor" ) );
-          glfwWindowHint( GLFW_CONTEXT_ROBUSTNESS    , get("context_robustness" ) );
+          {
+            const auto context_robustness = get_string( "context_robustness" );
+            if ( context_robustness == "no_robustness" )
+              glfwWindowHint( GLFW_CONTEXT_ROBUSTNESS, GLFW_NO_ROBUSTNESS );
+            else if ( context_robustness == "no_reset_notification" )
+              glfwWindowHint( GLFW_CONTEXT_ROBUSTNESS, GLFW_NO_RESET_NOTIFICATION );
+            else if ( context_robustness == "lose_context_on_reset")
+              glfwWindowHint( GLFW_CONTEXT_ROBUSTNESS, GLFW_LOSE_CONTEXT_ON_RESET );
+          }
           glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT , get_bool_as_int("opengl_forward_compat" ) );
           glfwWindowHint( GLFW_OPENGL_DEBUG_CONTEXT  , get_bool_as_int("opengl_debug_context" ) );
-          glfwWindowHint( GLFW_OPENGL_PROFILE        , get("opengl_profile" ) );
+          {
+            const auto opengl_profile = get_string( "opengl_profile" );
+            if ( opengl_profile == "any" )
+              glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE );
+            if ( opengl_profile == "compat" )
+              glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE );
+            if ( opengl_profile == "core" )
+              glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE );
+          }
         }
         
         auto initialize_create_window(initialize_params_t& ps) -> void
@@ -283,13 +308,13 @@ namespace wonder_rabbit_project
           ps.put( "refresh_rate" , 0 );
           ps.put( "stereo"       , false );
           ps.put( "srgb_capable" , false );
-          ps.put( "client_api"   , GLFW_OPENGL_API );
+          ps.put( "client_api"   , initialize_params::client_api::opengl );
           ps.put( "context_version_major" , 1 );
           ps.put( "context_version_minor" , 0 );
-          ps.put( "context_robustness"    , GLFW_NO_ROBUSTNESS );
+          ps.put( "context_robustness"    , initialize_params::context_robustness::no_robustness );
           ps.put( "opengl_forward_compat" , false );
           ps.put( "opengl_debug_context"  , false );
-          ps.put( "opengl_profile" , GLFW_OPENGL_ANY_PROFILE );
+          ps.put( "opengl_profile" , initialize_params::opengl_profile::any );
         }
         
         auto default_initialize_params_window_position(initialize_params_t& ps) const

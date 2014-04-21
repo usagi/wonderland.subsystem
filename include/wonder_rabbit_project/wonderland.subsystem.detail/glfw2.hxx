@@ -64,6 +64,9 @@ namespace wonder_rabbit_project
           const auto get_bool_as_int = [&ps, &dps](const char* name)
           { return int(ps.get(name, dps.get<bool>(name))); };
           
+          const auto get_string = [&ps, &dps](const char* name)
+          { return ps.get(name, dps.get<std::string>(name)); };
+          
           glfwOpenWindowHint( GLFW_REFRESH_RATE     , get("refresh_rate" ) );
           glfwOpenWindowHint( GLFW_ACCUM_RED_BITS   , get("accum_red_bits" ) );
           glfwOpenWindowHint( GLFW_ACCUM_GREEN_BITS , get("accum_green_bits" ) );
@@ -86,7 +89,15 @@ namespace wonder_rabbit_project
           glfwOpenWindowHint( GLFW_OPENGL_FORWARD_COMPAT , get_bool_as_int("opengl_forward_compat" ) );
           glfwOpenWindowHint( GLFW_OPENGL_DEBUG_CONTEXT  , get_bool_as_int("opengl_debug_context" ) );
           // GLFW3 convertiblity, but GLFW2 default value is 0(GLFW3 defined GLFW_OPENGL_ANY_PROFILE to 0).
-          glfwOpenWindowHint( GLFW_OPENGL_PROFILE , get("opengl_profile" ) );
+          {
+            const auto opengl_profile = get_string( "opengl_profile" );
+            if ( opengl_profile == "any" )
+              glfwOpenWindowHint( GLFW_OPENGL_PROFILE , 0 );
+            if ( opengl_profile == "compat" )
+              glfwOpenWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE );
+            if ( opengl_profile == "core" )
+              glfwOpenWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE );
+          }
         }
         
         auto initialize_open_window(initialize_params_t& ps) -> void
