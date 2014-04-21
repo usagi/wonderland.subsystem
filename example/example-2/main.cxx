@@ -31,7 +31,6 @@ namespace
   auto fs_source() -> std::string
   { return
       "#version 100\n"
-      //"out vec4 color;\n"
       "void main(void)\n"
       "{\n"
       "  gl_FragColor = vec4( 1., 0., 0., 1. );\n"
@@ -97,9 +96,8 @@ namespace
     glDeleteShader( fs );
     
     glBindAttribLocation( program, 0, "position" );
-    //glBindFragDataLocation( program, 0, "color" );
     glLinkProgram( program );
-   assert_program( program, "failed to link program" );
+    assert_program( program, "failed to link program" );
     
     return program;
   }
@@ -136,10 +134,6 @@ auto main()
   
   auto ips = subsystem -> default_initialize_params();
   ips.put( "title"         , "wonderland.subsystem example-2" );
-  //ips.put( "context_version_major" , 2);
-  //ips.put( "context_version_minor" , 0);
-  //ips.put( "client_api"    , GLFW_OPENGL_ES_API );
-  //ips.put( "opengl_profile", GLFW_OPENGL_COMPAT_PROFILE );
   subsystem -> initialize( std::move(ips) );
   
   std::vector<std::array<float, 2>>
