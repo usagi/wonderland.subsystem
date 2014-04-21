@@ -171,21 +171,21 @@ namespace wonder_rabbit_project
         {
           constexpr auto opengl   = "opengl";
           constexpr auto opengles = "opengl_es";
-        };
+        }
         
         namespace context_robustness
         {
           constexpr auto no_robustness         = "no_robustness";
           constexpr auto no_reset_notification = "no_reset_notification";
           constexpr auto lose_context_on_reset = "lose_context_on_reset";
-        };
+        }
         
         namespace opengl_profile
         {
           constexpr auto any    = "any";
           constexpr auto compat = "compat";
           constexpr auto core   = "core";
-        };
+        }
       }
       
       class subsystem_base_t

@@ -7,18 +7,12 @@ wonderland subsystem is C++ header-only library
  for standalone use and wonderland engine
  with PC(g++, clang++) and Emscripten(em++).
 
-## warning
-
-this is alpha version now.
-
-developing in the master branch currently.
-
 ## currently support
 
 - compiler
-    - g++-4.8
-    - clang++-3.2
-    - em++-1.14
+    - g++-4.8.1
+    - clang++-3.3
+    - em++-1.14.1
 
 - subsystem
     - GLFW3
@@ -36,6 +30,8 @@ developing in the master branch currently.
         - buttons : bool
         - wheel   : glm::vec2
         - position: glm::vec2
+        - hat     : glm::vec2
+        - ball    : glm::vec2
     
 ## dependancy
 
@@ -53,10 +49,12 @@ developing in the master branch currently.
 
 - GLFW3
     - [joystcik hat-switch](https://github.com/glfw/glfw/issues/278)
+    - joystick hat
     - joystick ball
     - joystcik name
 - GLFW2
     - joystcik hat-switch
+    - joystick hat
     - joystick ball
     - joystcik name
     - pointing device wheel dx
@@ -64,7 +62,7 @@ developing in the master branch currently.
     - pointing device wheel dx
 - SDL1 (1.2 and 1.3)
     - pointing device wheel dx dy
-    - opengl core profile initialization
+    - opengl core/compat profile initialization
 
 - Emscripten
     - [pointing device wheel dy reversed](https://github.com/kripken/emscripten/issues/2303)
