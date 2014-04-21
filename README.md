@@ -3,7 +3,7 @@
 wonderland subsystem is C++ header-only library
  of commonize wrapper layer
  of a window management and an input event polling
- as GLFW3, GLFW2, SDL2, SDL1 and GLUT
+ as GLFW3, GLFW2, SDL2 and SDL1
  for standalone use and wonderland engine
  with PC(g++, clang++) and Emscripten(em++).
 
