@@ -15,7 +15,7 @@ namespace
     , std::weak_ptr<wonder_rabbit_project::wonderland::subsystem::subsystem_base_t>
     >;
     
-  window_owner_dictionary_t window_owner_dictionary;
+  auto window_owner_dictionary = std::make_shared<window_owner_dictionary_t>();
 }
 
 namespace wonder_rabbit_project
@@ -149,11 +149,13 @@ namespace wonder_rabbit_project
             throw glfw3_runtime_error_t
             ( "glfwCreateWindow failed. window is nullptr." );
           
-          ::window_owner_dictionary.emplace( window, shared_from_this() );
+          ::window_owner_dictionary -> emplace( window, shared_from_this() );
           
-          _dtor_hooks.emplace_front( [ window ]
+          auto window_owner_dictionary_ = ::window_owner_dictionary;
+          
+          _dtor_hooks.emplace_front( [ window, window_owner_dictionary_ ]
           {
-            ::window_owner_dictionary.erase( window );
+            ::window_owner_dictionary -> erase( window );
             glfwDestroyWindow( window );
           });
         }
@@ -167,7 +169,7 @@ namespace wonder_rabbit_project
           {
             std::dynamic_pointer_cast<wonder_rabbit_project::wonderland::subsystem::GLFW3_t>
             ( ::window_owner_dictionary
-                .at(window)
+                -> at(window)
                   .lock()
             )
               -> temporary_wheel = { std::move(xoffset), std::move(yoffset) };

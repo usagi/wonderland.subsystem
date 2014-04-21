@@ -7,18 +7,6 @@
 
 #include "subsystem_base.hxx"
 
-namespace
-{
-  using subsystems_t
-    = std::forward_list
-      < std::weak_ptr
-        < wonder_rabbit_project::wonderland::subsystem::subsystem_base_t
-        >
-      >;
-  
-  subsystems_t subsystems;
-}
-
 namespace wonder_rabbit_project
 {
   namespace wonderland
@@ -125,11 +113,8 @@ namespace wonder_rabbit_project
             throw glfw2_runtime_error_t
             ( "glfwOpenWindow failed. window is nullptr." );
           
-          ::subsystems.emplace_front( shared_from_this() );
-          
           _dtor_hooks.emplace_front( [ this ]
           {
-            //::subsystems.remove( std::move( std::weak_ptr<subsystem_t>( this->shared_from_this() ) ) );
             glfwCloseWindow();
           });
         }
