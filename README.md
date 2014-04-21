@@ -62,13 +62,21 @@ developing in the master branch currently.
     - pointing device wheel dx
 - SDL2
     - pointing device wheel dx
-- SDL1
+- SDL1 (1.2 and 1.3)
     - pointing device wheel dx dy
+    - opengl core profile initialization
 
 - Emscripten
     - [pointing device wheel dy reversed](https://github.com/kripken/emscripten/issues/2303)
     - game controller device is not supported
         - hint: [HTML5 Gamepad API](https://dvcs.w3.org/hg/gamepad/raw-file/default/gamepad.html#gamepad-interface) is not support common web-browser in currently
+
+## plan to supporting list
+
+- [plan to version 2.](https://github.com/usagi/wonderland.subsystem/issues/20)
+    - GLUT + GLEW ( only for PC )
+    - EGL + original-input-impl ( only for Web )
+    - QtOpenGL
 
 ## backend API documentation link
 

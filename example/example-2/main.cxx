@@ -83,7 +83,7 @@ namespace
     glShaderSource( vs, 1, &vss, nullptr );
     glCompileShader( vs );
     assert_shader( vs , "failed to compile vertex shader" );
-    
+
     auto fss = fs_source.data();
     const auto fs = glCreateShader( GL_FRAGMENT_SHADER );
     glShaderSource( fs, 1, &fss, nullptr );

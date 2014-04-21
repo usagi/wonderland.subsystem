@@ -4,7 +4,13 @@
 
 #include <sprout/math/sqrt.hpp>
 
+#include <GL/glew.h>
+#include <GL/gl.h>
+#include <GL/glext.h>
+
+#define NO_SDL_GLEXT
 #include <SDL/SDL.h>
+#include <SDL/SDL_opengl.h>
 
 #include "subsystem_base.hxx"
 
@@ -113,20 +119,17 @@ namespace wonder_rabbit_project
             throw sdl1_runtime_error_t
             ( "SDL_CreateWindow failed. window is nullptr." );
           
-          /*
-          if ( flag & SDL_WINDOW_OPENGL )
+          // TODO: support?
+          if ( get_bool( "SDL.opengl" ) )
           {
-            const auto sdl_gl_context = SDL_GL_CreateContext( window );
-            //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-            //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-            //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-            
-            _dtor_hooks.emplace_front( [ sdl_gl_context ]
+            glewExperimental = GL_TRUE;
+            auto result = glewInit();
+            if ( result not_eq GLEW_OK )
             {
-              SDL_GL_DeleteContext( sdl_gl_context );
-            });
+              auto message = glewGetErrorString(result);
+              throw sdl1_runtime_error_t( reinterpret_cast<const char*>( message ) );
+            }
           }
-          */
         }
         
         auto initialize_set_caption(initialize_params_t ps)
@@ -350,6 +353,7 @@ namespace wonder_rabbit_project
           ps.put( "SDL.hwpalette"  , false );
           ps.put( "SDL.fullscreen" , false );
           ps.put( "SDL.doublebuf"  , true );
+          ps.put( "SDL.opengl"     , true );
         }
         
         auto default_initialize_params_set_caption(initialize_params_t& ps) const
