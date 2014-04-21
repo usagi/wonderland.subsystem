@@ -133,7 +133,7 @@ auto main()
   auto subsystem = std::make_shared<subsystem_t>();
   
   auto ips = subsystem -> default_initialize_params();
-  ips.put( "title"         , "wonderland.subsystem example-2" );
+  ips.put( "title", "wonderland.subsystem example-2" );
   subsystem -> initialize( std::move(ips) );
   
   std::vector<std::array<float, 2>>
