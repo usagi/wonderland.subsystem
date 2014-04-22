@@ -1,3 +1,14 @@
+#if not defined( WRP_WONDERLAND_SUBSYSTEM_GLFW3 ) \
+    not defined( WRP_WONDERLAND_SUBSYSTEM_GLFW2 ) \
+    not defined( WRP_WONDERLAND_SUBSYSTEM_SDL2 ) \
+    not defined( WRP_WONDERLAND_SUBSYSTEM_SDL1 )
+  #ifndef EMSCRIPTEN
+    #define WRP_WONDERLAND_SUBSYSTEM_GLFW3
+  #else
+    #define WRP_WONDERLAND_SUBSYSTEM_GLFW2
+  #endif
+#endif
+
 #include <boost/scope_exit.hpp>
 
 #include "wonderland.subsystem.detail/key.hxx"
