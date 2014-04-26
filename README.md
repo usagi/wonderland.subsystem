@@ -85,7 +85,7 @@ wonderland subsystem is C++ header-only library
 
 ## license
 
-- GPLv3
+- [MIT](LICENSE)
 
 ## author
 
