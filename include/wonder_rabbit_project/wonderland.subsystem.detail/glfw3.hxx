@@ -3,6 +3,7 @@
 #include <forward_list>
 #include <unordered_map>
 #include <limits>
+#include <cstdint>
 
 #include <GLFW/glfw3.h>
 
@@ -181,7 +182,14 @@ namespace wonder_rabbit_project
           glfwSetFramebufferSizeCallback
           ( _window
           , [](GLFWwindow* window, int width, int height)
-            { glViewport(0, 0, width, height); }
+            {
+              if ( auto p_glViewport = glfwGetProcAddress("glViewport") )
+              {
+                using PFNGLVIEWPORT = void(*)(std::int32_t, std::int32_t, std::uint32_t, std::uint32_t);
+                auto glViewport = reinterpret_cast< PFNGLVIEWPORT >( p_glViewport );
+                glViewport(0, 0, width, height);
+              }
+            }
           );
         }
         
