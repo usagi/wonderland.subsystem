@@ -18,6 +18,7 @@
 #ifdef WRP_WONDERLAND_SUBSYSTEM_GLFW3
   #include "wonderland.subsystem.detail/glfw3.hxx"
 #elif defined(WRP_WONDERLAND_SUBSYSTEM_GLFW2)
+  #define GLFW_NO_GLU
   #include "wonderland.subsystem.detail/glfw2.hxx"
 #elif defined(WRP_WONDERLAND_SUBSYSTEM_SDL2)
   #include "wonderland.subsystem.detail/sdl2.hxx"
