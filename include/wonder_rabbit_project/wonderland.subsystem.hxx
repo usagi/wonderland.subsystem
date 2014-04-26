@@ -1,7 +1,7 @@
-#if not defined( WRP_WONDERLAND_SUBSYSTEM_GLFW3 ) \
- or not defined( WRP_WONDERLAND_SUBSYSTEM_GLFW2 ) \
- or not defined( WRP_WONDERLAND_SUBSYSTEM_SDL2 ) \
- or not defined( WRP_WONDERLAND_SUBSYSTEM_SDL1 )
+#if  not defined( WRP_WONDERLAND_SUBSYSTEM_GLFW3 ) \
+ and not defined( WRP_WONDERLAND_SUBSYSTEM_GLFW2 ) \
+ and not defined( WRP_WONDERLAND_SUBSYSTEM_SDL2 ) \
+ and not defined( WRP_WONDERLAND_SUBSYSTEM_SDL1 )
   #ifndef EMSCRIPTEN
     #define WRP_WONDERLAND_SUBSYSTEM_GLFW3
   #else
