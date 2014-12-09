@@ -9,8 +9,8 @@ wonderland subsystem is C++ header-only library
 
 example:
 
-- [example-1](build.em++.GLFW3/example/example-1/example-1.html)
-- [example-2](build.em++.GLFW3/example/example-2/example-2.html)
+- [example-1](http://usagi.github.io/wonderland.subsystem/build.em++.GLFW3/example/example-1/example-1.html)
+- [example-2](http://usagi.github.io/wonderland.subsystem/build.em++.GLFW3/example/example-2/example-2.html)
 
 note: run these example with look a javascript console.
 
