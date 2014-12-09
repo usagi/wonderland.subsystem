@@ -1,8 +1,0 @@
-{ "name"  : "wonderland.subsystem"
-, "files" : [ { "git": 1 } ]
-, "build" :
-  { "directory" : "build"
-  , "build"     : "ninja"
-  , "clean"     : "ninja clean"
-  }
-}
