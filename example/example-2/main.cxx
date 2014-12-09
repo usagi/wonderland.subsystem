@@ -19,7 +19,6 @@ namespace
 {
   auto vs_source() -> std::string
   { return 
-      "#version 100\n"
       "attribute vec4 position;\n"
       "void main(void)\n"
       "{\n"
@@ -30,7 +29,6 @@ namespace
   
   auto fs_source() -> std::string
   { return
-      "#version 100\n"
       "void main(void)\n"
       "{\n"
       "  gl_FragColor = vec4( 1., 0., 0., 1. );\n"

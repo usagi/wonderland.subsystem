@@ -10,12 +10,14 @@ wonderland subsystem is C++ header-only library
 ## currently support
 
 - compiler
-    - g++-4.8.1
-    - clang++-3.3
-    - em++-1.14.1
+    - g++-4.9
+    - clang++-3.5
+    - em++-1.27.1
 
 - subsystem
     - GLFW3
+        - g++/clang++: 3.1
+        - em++: 3.0.3
     - GLFW2
 
 ## features
