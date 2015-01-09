@@ -22,7 +22,7 @@ namespace wonder_rabbit_project
           fixed_key = key::keyboard_a_and_A + key - 65;
         // F1 - F12
         else if ( key >= 290 and key <= 301 )
-          fixed_key = key::keyboard_f1 + key - 290;
+          fixed_key = key::keyboard_f1 + key - 289;
         // F13 - F24
         else if ( key >= 302 and key <= 313 )
           fixed_key = key::keyboard_f13 + key - 302;
