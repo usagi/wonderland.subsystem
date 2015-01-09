@@ -20,12 +20,6 @@ namespace wonder_rabbit_project
         // A - Z
         else if ( key >= 65 and key <= 90 )
           fixed_key = key::keyboard_a_and_A + key - 65;
-        // F1 - F12
-        else if ( key >= 290 and key <= 301 )
-          fixed_key = key::keyboard_f1 + key - 289;
-        // F13 - F24
-        else if ( key >= 302 and key <= 313 )
-          fixed_key = key::keyboard_f13 + key - 302;
         // Num1 - Num9
         else if ( key >= 321 and key <= 329 )
           fixed_key = key::keypad_1_and_end + key - 321;
@@ -69,6 +63,32 @@ namespace wonder_rabbit_project
             case 282: fixed_key = key::keypad_num_lock_and_clear; break;
             case 283: fixed_key = key::keyboard_print_screen; break;
             case 284: fixed_key = key::keyboard_pause; break;
+            case 290: fixed_key = key::f1; break;
+            case 291: fixed_key = key::f2; break;
+            case 292: fixed_key = key::f3; break;
+            case 293: fixed_key = key::f4; break;
+            case 294: fixed_key = key::f5; break;
+            case 295: fixed_key = key::f6; break;
+            case 296: fixed_key = key::f7; break;
+            case 297: fixed_key = key::f8; break;
+            case 298: fixed_key = key::f9; break;
+            case 299: fixed_key = key::f10; break;
+            case 300: fixed_key = key::f11; break;
+            case 301: fixed_key = key::f12; break;
+            case 302: fixed_key = key::f13; break;
+            case 303: fixed_key = key::f14; break;
+            case 304: fixed_key = key::f15; break;
+            case 305: fixed_key = key::f16; break;
+            case 306: fixed_key = key::f17; break;
+            case 307: fixed_key = key::f18; break;
+            case 308: fixed_key = key::f19; break;
+            case 309: fixed_key = key::f20; break;
+            case 310: fixed_key = key::f21; break;
+            case 311: fixed_key = key::f22; break;
+            case 312: fixed_key = key::f23; break;
+            case 313: fixed_key = key::f24; break;
+            // no has F25 in USB HID definition
+            //case 314: fixed_key = key::f25; break;
             case 320: fixed_key = key::keypad_0_and_insert; break;
             case 336: fixed_key = key::keypad_equal; break;
             case 348: fixed_key = key::keyboard_menu; break;
