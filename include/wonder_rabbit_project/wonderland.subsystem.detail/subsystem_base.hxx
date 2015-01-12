@@ -431,8 +431,11 @@ namespace wonder_rabbit_project
         inline auto keyboard_state() const 
           -> bool
         {
+// MSVC++ ‚Í T_keycode ‚ª’è”®‚Å‚ ‚Á‚Ä‚à”ñconstexprŠÖ”‚Åstatic_assert‚ğg‚¦‚È‚¢
+#ifndef _MSC_VER
           static_assert(T_keycode >= std::numeric_limits<key_code_t>::min(), "T_keycode must: T_keycode >= std::numeric_limits<key_code_t>::min()");
           static_assert(T_keycode <= std::numeric_limits<key_code_t>::max(), "T_keycode must: T_keycode <= std::numeric_limits<key_code_t>::max()");
+#endif
           return _keyboard_states[key_code_t(T_keycode)];
         }
         
