@@ -189,6 +189,16 @@ namespace wonder_rabbit_project
                 auto glViewport = reinterpret_cast< PFNGLVIEWPORT >( p_glViewport );
                 glViewport(0, 0, width, height);
               }
+// TODO: WHYYYYYYYYYYYYYYYYYYYYYYYYYY MSVC+++++++++++++++++++++++++++++++++++++++++++ WINDOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWS
+#if defined(_MSC_VER)
+              if ( auto p_glGetError = glfwGetProcAddress("glGetError") )
+              {
+                using PFNGLGETERROR = std::uint32_t(*)();
+                auto glGetError = reinterpret_cast< PFNGLGETERROR >( p_glGetError );
+                auto e = glGetError();
+                std::cout << std::to_string( e );
+              }
+#endif
             }
           );
         }
