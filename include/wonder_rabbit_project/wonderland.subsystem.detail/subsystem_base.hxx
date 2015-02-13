@@ -404,6 +404,8 @@ namespace wonder_rabbit_project
         virtual auto version() const -> version_t = 0;
         virtual auto name()    const -> std::string = 0;
         
+        virtual auto title( const std::string& ) const -> void { }
+        
         virtual auto update() -> void
         {
           for ( const auto& f : update_functors )

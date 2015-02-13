@@ -392,6 +392,10 @@ namespace wonder_rabbit_project
           -> std::string override
         { return "GLFW3"; }
         
+        auto title( const std::string& value ) const
+          -> void
+        { glfwSetWindowTitle( _window, value.data() ); }
+        
       };
       
 #ifndef WRP_WONDERLAND_SUBSYSTEM_T
