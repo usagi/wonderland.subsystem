@@ -295,6 +295,11 @@ namespace wonder_rabbit_project
           }
         }
         
+        auto get_glfw3_window_handle() const -> const decltype(_window)
+        {
+          return _window;
+        }
+        
         auto default_initialize_params_create_window(initialize_params_t& ps) const
           -> void
         {
