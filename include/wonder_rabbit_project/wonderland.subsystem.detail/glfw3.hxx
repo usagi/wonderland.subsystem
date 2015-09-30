@@ -287,14 +287,18 @@ namespace wonder_rabbit_project
       public:
         
         ~GLFW3_t() override
-        { 
+        {
+          reset_dtor_hooks();
+        }
+        
+        auto reset_dtor_hooks() -> void
+        {
           while( not _dtor_hooks.empty() )
           { 
             _dtor_hooks.front()();
             _dtor_hooks.pop_front();
           }
         }
-        
         auto get_glfw3_window_handle() const -> const decltype(_window)
         {
           return _window;
