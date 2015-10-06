@@ -260,7 +260,7 @@ namespace wonder_rabbit_project
 #ifndef EMSCRIPTEN
           for
           ( int index_of_joystick = 0
-          ; glfwJoystickPresent(index_of_joystick) == GL_TRUE
+          ; glfwJoystickPresent(index_of_joystick) == static_cast< int >( GL_TRUE )
           ; ++index_of_joystick
           )
           {
