@@ -46,6 +46,9 @@ namespace wonder_rabbit_project
       public:
         pointing_states_t::wheel_t temporary_wheel;
         
+        std::function< auto () -> void > on_window_iconify;
+        std::function< auto () -> void > on_window_restore;
+        
       private:
         
         auto initialize_glfw() -> void
@@ -163,6 +166,24 @@ namespace wonder_rabbit_project
         
         auto initialize_make_contex_current() const ->void
         { glfwMakeContextCurrent( _window ); }
+        
+        auto initialize_set_iconify_callback() const -> void
+        {
+          glfwSetWindowIconifyCallback( _window, [](GLFWwindow* window, int iconified)
+          {
+            const auto s = std::dynamic_pointer_cast<wonder_rabbit_project::wonderland::subsystem::GLFW3_t>
+            ( ::window_owner_dictionary
+                -> at(window)
+                  .lock()
+            );
+            
+            iconified
+              ? s->on_window_iconify()
+              : s->on_window_restore()
+              ;
+            
+          } );
+        }
         
         auto initialize_set_scroll_callback() const -> void
         {
@@ -286,6 +307,11 @@ namespace wonder_rabbit_project
         
       public:
         
+        GLFW3_t()
+          : on_window_iconify( []{} )
+          , on_window_restore( []{} )
+        { }
+        
         ~GLFW3_t() override
         {
           reset_dtor_hooks();
@@ -375,6 +401,7 @@ namespace wonder_rabbit_project
           initialize_make_contex_current();
           initialize_set_scroll_callback();
           initialize_set_frame_buffer_size_callback();
+          initialize_set_iconify_callback();
         }
         
         auto after_render()
