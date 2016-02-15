@@ -26,9 +26,6 @@ namespace wonder_rabbit_project
         // Num{ / * - + ENTER }
         else if ( key >= 331 and key <= 335 )
           fixed_key = key::keypad_slash + key - 331;
-        // modifiers ( L{S,C,A,S} R{S,C,A,S} )
-        else if ( key >= 340 and key <= 347 )
-          fixed_key = key::keyboard_left_shift + key - 340;
         else
           switch (key)
           { case 32: fixed_key = key::keyboard_spacebar; break;
@@ -91,6 +88,14 @@ namespace wonder_rabbit_project
             //case 314: fixed_key = key::f25; break;
             case 320: fixed_key = key::keypad_0_and_insert; break;
             case 336: fixed_key = key::keypad_equal; break;
+            case 340: fixed_key = key::keyboard_left_shift; break;
+            case 341: fixed_key = key::keyboard_left_control; break;
+            case 342: fixed_key = key::keyboard_left_alt; break;
+            case 343: fixed_key = key::keyboard_left_gui; break;
+            case 344: fixed_key = key::keyboard_right_shift; break;
+            case 345: fixed_key = key::keyboard_right_control; break;
+            case 346: fixed_key = key::keyboard_right_alt; break;
+            case 347: fixed_key = key::keyboard_right_gui; break;
             case 348: fixed_key = key::keyboard_menu; break;
           };
       
