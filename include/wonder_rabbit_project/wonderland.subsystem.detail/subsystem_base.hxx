@@ -11,6 +11,7 @@
 #include <mutex>
 
 #include <boost/property_tree/ptree.hpp>
+#include <boost/signals2/signal.hpp>
 
 // https://github.com/g-truc/glm
 #include <glm/glm.hpp>
@@ -202,14 +203,26 @@ namespace wonder_rabbit_project
         using initialize_params_t
           = boost::property_tree::ptree;
             
+        /// @deprecated to use update_signals_type
         using update_functors_t
           = std::forward_list
             < std::function<void()>
             >;
         
+        /// @deprecated to use render_signals_type
         using render_functors_t
           = update_functors_t;
-          
+        
+        using update_signature_type = auto () -> void;
+        using update_functor_type   = std::function< update_signature_type >;
+        using update_signal_type    = boost::signals2::signal< update_signature_type >;
+        using update_slot_type      = update_signal_type::slot_type;
+        
+        using render_signature_type = auto () -> void;
+        using render_functor_type   = std::function< render_signature_type >;
+        using render_signal_type    = boost::signals2::signal< render_signature_type >;
+        using render_slot_type      = render_signal_type::slot_type;
+        
         using keyboard_states_t
           = std::vector<bool>;
           
@@ -381,8 +394,13 @@ namespace wonder_rabbit_project
         
       public:
         
+        /// @deprecated to use update_signal
         update_functors_t update_functors;
+        /// @deprecated to use render_signal
         render_functors_t render_functors;
+        
+        update_signal_type update_signal;
+        render_signal_type render_signal;
         
         subsystem_base_t()
         {
@@ -410,12 +428,16 @@ namespace wonder_rabbit_project
         {
           for ( const auto& f : update_functors )
             f();
+          
+          update_signal();
         }
         
         virtual auto render() -> void
         {
           for ( const auto& f : render_functors )
             f();
+          
+          render_signal();
         }
         
         virtual auto to_continue() const
@@ -433,7 +455,7 @@ namespace wonder_rabbit_project
         inline auto keyboard_state() const 
           -> bool
         {
-// MSVC++ ‚Í T_keycode ‚ª’è”Ž®‚Å‚ ‚Á‚Ä‚à”ñconstexprŠÖ”‚Åstatic_assert‚ðŽg‚¦‚È‚¢
+// MSVC++ ï¿½ï¿½ T_keycode ï¿½ï¿½ï¿½è”ï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½constexprï¿½Öï¿½ï¿½ï¿½static_assertï¿½ï¿½ï¿½gï¿½ï¿½ï¿½È‚ï¿½
 #ifndef _MSC_VER
           static_assert(T_keycode >= std::numeric_limits<key_code_t>::min(), "T_keycode must: T_keycode >= std::numeric_limits<key_code_t>::min()");
           static_assert(T_keycode <= std::numeric_limits<key_code_t>::max(), "T_keycode must: T_keycode <= std::numeric_limits<key_code_t>::max()");
