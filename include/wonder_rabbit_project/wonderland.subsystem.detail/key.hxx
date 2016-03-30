@@ -183,7 +183,54 @@ namespace wonder_rabbit_project
         , keyboard_clear_again
         , keyboard_cr_sel_props
         , keyboard_ex_sel
-        , keyboard_left_control, left_control = keyboard_left_control
+        // 0xA5-0xAF: Reserved
+        , keypad_00 = 0xB0
+        , keypad_000
+        , thousands_separator
+        , decimal_separator
+        , currency_unit
+        , currency_sub_unit
+        , keypad_round_bracket_open
+        , keypad_round_bracket_close
+        , keypad_curly_bracket_open
+        , keypad_curly_bracket_close
+        , keypad_tab
+        , keypad_backspace
+        , keypad_a
+        , keypad_b
+        , keypad_c
+        , keypad_d
+        , keypad_e
+        , keypad_f
+        , keypad_xor
+        , keypad_hat
+        , keypad_parcent
+        , keypad_left_angle_bracket
+        , keypad_right_angle_bracket
+        , keypad_and
+        , keypad_and_and
+        , keypad_virtical_bar
+        , keypad_virtical_bar_virtical_bar
+        , keypad_colon
+        , keypad_number
+        , keypad_space
+        , keypad_exclamation
+        , keypad_memory_store
+        , keypad_memory_recall
+        , keypad_memory_clear
+        , keypad_memory_add
+        , keypad_memory_subtract
+        , keypad_memory_multiply
+        , keypad_memory_divide
+        , keypad_plus_minus
+        , keypad_clear
+        , keypad_clear_entry
+        , keypad_binary
+        , keypad_octal
+        , keypad_decimal
+        , keypad_hexadecimal
+        // 0xDE-0xDF : Reserved
+        , keyboard_left_control = 0xE0, left_control = keyboard_left_control
         , keyboard_left_shift  , left_shift   = keyboard_left_shift
         , keyboard_left_alt    , left_alt     = keyboard_left_alt
         , keyboard_left_gui    , left_gui     = keyboard_left_gui
@@ -369,6 +416,53 @@ namespace wonder_rabbit_project
       template<> struct key_name_t<0xA2> { static constexpr auto value() { return "keyboard_clear_again"; } };
       template<> struct key_name_t<0xA3> { static constexpr auto value() { return "keyboard_cr_sel_props"; } };
       template<> struct key_name_t<0xA4> { static constexpr auto value() { return "keyboard_ex_sel"; } };
+      
+      template<> struct key_name_t<0xB0> { static constexpr auto value() { return "keypad_00"; } };
+      template<> struct key_name_t<0xB1> { static constexpr auto value() { return "keypad_000"; } };
+      template<> struct key_name_t<0xB2> { static constexpr auto value() { return "thousands_separator"; } };
+      template<> struct key_name_t<0xB3> { static constexpr auto value() { return "decimal_secparator"; } };
+      template<> struct key_name_t<0xB4> { static constexpr auto value() { return "currency_unit"; } };
+      template<> struct key_name_t<0xB5> { static constexpr auto value() { return "currency_sub_unit"; } };
+      template<> struct key_name_t<0xB6> { static constexpr auto value() { return "keypad_round_bracket_open"; } };
+      template<> struct key_name_t<0xB7> { static constexpr auto value() { return "keypad_round_bracket_close"; } };
+      template<> struct key_name_t<0xB8> { static constexpr auto value() { return "keypad_curly_bracket_open"; } };
+      template<> struct key_name_t<0xB9> { static constexpr auto value() { return "keypad_curly_bracket_close"; } };
+      template<> struct key_name_t<0xBA> { static constexpr auto value() { return "keypad_tab"; } };
+      template<> struct key_name_t<0xBB> { static constexpr auto value() { return "keypad_backspace"; } };
+      template<> struct key_name_t<0xBC> { static constexpr auto value() { return "keypad_a"; } };
+      template<> struct key_name_t<0xBD> { static constexpr auto value() { return "keypad_b"; } };
+      template<> struct key_name_t<0xBE> { static constexpr auto value() { return "keypad_c"; } };
+      template<> struct key_name_t<0xBF> { static constexpr auto value() { return "keypad_d"; } };
+      template<> struct key_name_t<0xC0> { static constexpr auto value() { return "keypad_e"; } };
+      template<> struct key_name_t<0xC1> { static constexpr auto value() { return "keypad_f"; } };
+      template<> struct key_name_t<0xC2> { static constexpr auto value() { return "keypad_xor"; } };
+      template<> struct key_name_t<0xC3> { static constexpr auto value() { return "keypad_hat"; } };
+      template<> struct key_name_t<0xC4> { static constexpr auto value() { return "keypad_parcent"; } };
+      template<> struct key_name_t<0xC5> { static constexpr auto value() { return "keypad_left_angle_bracket"; } };
+      template<> struct key_name_t<0xC6> { static constexpr auto value() { return "keypad_right_aangle_bracket"; } };
+      template<> struct key_name_t<0xC7> { static constexpr auto value() { return "keypad_and"; } };
+      template<> struct key_name_t<0xC8> { static constexpr auto value() { return "keypad_and_and"; } };
+      template<> struct key_name_t<0xC9> { static constexpr auto value() { return "keypad_virtical_bar"; } };
+      template<> struct key_name_t<0xCA> { static constexpr auto value() { return "keypad_virtical_bar_virtical_bar"; } };
+      template<> struct key_name_t<0xCB> { static constexpr auto value() { return "keypad_colon"; } };
+      template<> struct key_name_t<0xCC> { static constexpr auto value() { return "keypad_number"; } };
+      template<> struct key_name_t<0xCD> { static constexpr auto value() { return "keypad_space"; } };
+      template<> struct key_name_t<0xCE> { static constexpr auto value() { return "keypad_exclamation"; } };
+      template<> struct key_name_t<0xCF> { static constexpr auto value() { return "keypad_memory_store"; } };
+      template<> struct key_name_t<0xD0> { static constexpr auto value() { return "keypad_memory_recall"; } };
+      template<> struct key_name_t<0xD1> { static constexpr auto value() { return "keypad_memory_clear"; } };
+      template<> struct key_name_t<0xD2> { static constexpr auto value() { return "keypad_memory_add"; } };
+      template<> struct key_name_t<0xD3> { static constexpr auto value() { return "keypad_memory_subtract"; } };
+      template<> struct key_name_t<0xD4> { static constexpr auto value() { return "keypad_memory_multiply"; } };
+      template<> struct key_name_t<0xD5> { static constexpr auto value() { return "keypad_memory_divide"; } };
+      template<> struct key_name_t<0xD6> { static constexpr auto value() { return "keypad_plus_minus"; } };
+      template<> struct key_name_t<0xD7> { static constexpr auto value() { return "keypad_clear"; } };
+      template<> struct key_name_t<0xD8> { static constexpr auto value() { return "keypad_clear_entry"; } };
+      template<> struct key_name_t<0xD9> { static constexpr auto value() { return "keypad_binary"; } };
+      template<> struct key_name_t<0xDA> { static constexpr auto value() { return "keypad_octal"; } };
+      template<> struct key_name_t<0xDB> { static constexpr auto value() { return "keypad_decimal"; } };
+      template<> struct key_name_t<0xDC> { static constexpr auto value() { return "keypad_hexadecimal"; } };
+      
       template<> struct key_name_t<0xE0> { static constexpr auto value() { return "keyboard_left_control"; } };
       template<> struct key_name_t<0xE1> { static constexpr auto value() { return "keyboard_left_shift"; } };
       template<> struct key_name_t<0xE2> { static constexpr auto value() { return "keyboard_left_alt"; } };
