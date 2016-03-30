@@ -76,18 +76,18 @@ namespace wonder_rabbit_project
         , keyboard_dot_and_angle_bracket_close , dot = keyboard_dot_and_angle_bracket_close, angle_bracket_close = keyboard_dot_and_angle_bracket_close // . >
         , keyboard_slash_and_question          , slash = keyboard_slash_and_question, question = keyboard_slash_and_question // / ?
         , keyboard_caps_lock                   , caps_lock = keyboard_caps_lock
-        , keyboard_f1, f1
-        , keyboard_f2, f2
-        , keyboard_f3, f3
-        , keyboard_f4, f4
-        , keyboard_f5, f5
-        , keyboard_f6, f6
-        , keyboard_f7, f7
-        , keyboard_f8, f8
-        , keyboard_f9, f9
-        , keyboard_f10, f10
-        , keyboard_f11, f11
-        , keyboard_f12, f12
+        , keyboard_f1, f1 = keyboard_f1
+        , keyboard_f2, f2 = keyboard_f2
+        , keyboard_f3, f3 = keyboard_f3
+        , keyboard_f4, f4 = keyboard_f4
+        , keyboard_f5, f5 = keyboard_f5
+        , keyboard_f6, f6 = keyboard_f6
+        , keyboard_f7, f7 = keyboard_f7
+        , keyboard_f8, f8 = keyboard_f8
+        , keyboard_f9, f9 = keyboard_f9
+        , keyboard_f10, f10 = keyboard_f10
+        , keyboard_f11, f11 = keyboard_f11
+        , keyboard_f12, f12 = keyboard_f12
         , keyboard_print_screen, print_screen = keyboard_print_screen
         , keyboard_scroll_lock , scroll_lock = keyboard_scroll_lock
         , keyboard_pause       , pause = keyboard_pause
