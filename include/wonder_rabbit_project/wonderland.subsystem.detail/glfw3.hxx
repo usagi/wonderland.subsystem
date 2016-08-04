@@ -235,8 +235,8 @@ namespace wonder_rabbit_project
           
           glfwSetWindowPos
           ( _window
-          , ps.get("x" , dps.get<int>("x") ) & 0x0000FFFF
-          , ps.get("y" , dps.get<int>("y") ) & 0x0000FFFF
+          , ps.get("x" , dps.get<int>("x") )
+          , ps.get("y" , dps.get<int>("y") )
           );
         }
         
