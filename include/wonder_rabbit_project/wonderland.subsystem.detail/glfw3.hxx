@@ -204,9 +204,14 @@ namespace wonder_rabbit_project
           ( _window
           , [](GLFWwindow* window, int width, int height)
             {
-              if ( auto p_glViewport = glfwGetProcAddress("glViewport") )
+              if ( const auto p_glViewport = glfwGetProcAddress("glViewport") )
               {
-                using PFNGLVIEWPORT = void(*)(std::int32_t, std::int32_t, std::uint32_t, std::uint32_t);
+                using PFNGLVIEWPORT = void
+                (
+#ifdef _WIN32
+                  WINAPI
+#endif
+                *)(std::int32_t, std::int32_t, std::uint32_t, std::uint32_t);
                 auto glViewport = reinterpret_cast< PFNGLVIEWPORT >( p_glViewport );
                 glViewport(0, 0, width, height);
               }
